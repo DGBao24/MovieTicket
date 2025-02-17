@@ -129,10 +129,6 @@
                 background-color: #d4edda;
                 color: #155724;
             }
-            
-            #change{
-                background-color: #0056b3;
-            }
 
 
         </style>
@@ -190,8 +186,8 @@
                 <input type="text" name="Address" value="<%= customer.getAddress() %>" required>
             </div>
 
-            <div class="btn-container ">
-                <button type="submit" name="submit" class="btn " id="change" >Lưu thay đổi</button>
+            <div class="btn-container">
+                <button type="submit" name="submit" class="btn">Lưu thay đổi</button>
             </div>
         </form>
         <br>

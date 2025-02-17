@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+=======
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+>>>>>>> 0846b438060f7c8b560467be935bd16652350eea
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,9 +21,15 @@
                                     <div class="mb-4">
                                         <h3>Sign Up</h3>
                                         <% if (request.getAttribute("mess") != null) { %>
+<<<<<<< HEAD
                                         <div class="alert alert-danger mt-3">
                                             <%= request.getAttribute("mess") %>
                                         </div>
+=======
+                                            <div class="alert alert-danger mt-3">
+                                                <%= request.getAttribute("mess") %>
+                                            </div>
+>>>>>>> 0846b438060f7c8b560467be935bd16652350eea
                                         <% } %>
                                     </div>
                                 </div>
@@ -47,6 +57,7 @@
                                         <input type="text" class="form-control" name="phone" id="phone" placeholder="123-456-7890" required>
                                     </div>
                                     <div class="col-12">
+<<<<<<< HEAD
                                         <label>Gender:</label>
                                         <select name="Gender" required class="form-control">
                                             <option value="Male" <%= customer.getGender().equals("Male") ? "selected" : "" %>>Male</option>
@@ -55,6 +66,8 @@
                                         </select>
                                     </div>
                                     <div class="col-12">
+=======
+>>>>>>> 0846b438060f7c8b560467be935bd16652350eea
                                         <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="address" id="address" placeholder="123 Main St, City, Country" required>
                                     </div>
