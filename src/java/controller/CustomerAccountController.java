@@ -1,0 +1,205 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package controller;
+
+import entity.Account;
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import model.DAOAccount;
+import utils.Validation;
+
+/**
+ *
+ * @author pdatt
+ */
+@WebServlet(name = "CustomerAccountController", urlPatterns = {"/account"})
+public class CustomerAccountController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(true);
+        DAOAccount dao = new DAOAccount();
+
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String service = request.getParameter("service");
+
+            if (service.equals("changeCustomerProfile")) {
+                Integer cid = (Integer) session.getAttribute("CustomerID");
+
+                if (cid == null) {
+                    response.sendRedirect("login.jsp");
+                    return;
+                }
+
+                Account customer = dao.getAccountById(cid);
+                String submit = request.getParameter("submit");
+
+                if (submit == null) {
+                    request.setAttribute("dataCustomer", customer);
+                    request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                } else {
+                    
+                    request.setCharacterEncoding("UTF-8");
+                    String Name = request.getParameter("Name");
+
+                    String Address = request.getParameter("Address");
+                    String PhoneNum = request.getParameter("PhoneNum");
+                    String YearOfBirth = request.getParameter("YearOfBirth");
+                     String Gender = request.getParameter("Gender");
+                    if (Name.isEmpty() || Address.isEmpty() || PhoneNum.isEmpty() || YearOfBirth.isEmpty() || Gender.isEmpty()) {
+                        request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
+                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        return;
+                    }
+
+                    int YearOfBirtH;
+                    try {
+                        YearOfBirtH = Integer.parseInt(YearOfBirth);
+                    } catch (NumberFormatException e) {
+                        request.setAttribute("errorMessage", "Năm sinh không hợp lệ!");
+                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Cập nhật thông tin khách hàng
+                    Account acc = new Account(cid, Name, PhoneNum, Address, YearOfBirtH, Gender);
+                    int updated = dao.updateCustomer(acc);
+
+                    if (updated > 0) {
+
+                        
+                        Account updatedCustomer = dao.getAccountById(customer.getAccountID()); 
+                        session.setAttribute("account", updatedCustomer); 
+
+                        request.setAttribute("successMessage", "Cập nhật thông tin thành công!");
+                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("errorMessage", "Cập nhật thất bại, vui lòng thử lại!");
+                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                    }
+                }
+            }
+
+            if (service.equals("changePassword")) {
+                Integer cid = (Integer) session.getAttribute("CustomerID");
+
+                if (cid == null) {
+                    response.sendRedirect("login.jsp");
+                    return;
+                }
+
+                Account customer = dao.getAccountById(cid);
+                String submit = request.getParameter("submit");
+
+                if (submit == null) {
+                    request.setAttribute("dataCustomer", customer);
+                    request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                } else {
+                    String currentPassword = request.getParameter("currentPassword");
+                    String newPassword = request.getParameter("newPassword");
+                    String confirmPassword = request.getParameter("confirmPassword");
+
+                    // Kiểm tra nếu có ô nào bị bỏ trống
+                    if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                        request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
+                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Kiểm tra mật khẩu cũ có đúng không
+                    if (!customer.getPassword().equals(currentPassword)) {
+                        request.setAttribute("errorMessage", "Mật khẩu cũ không chính xác!");
+                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Kiểm tra mật khẩu mới và xác nhận mật khẩu mới có khớp không
+                    if (!newPassword.equals(confirmPassword)) {
+                        request.setAttribute("errorMessage", "Mật khẩu mới không khớp, vui lòng nhập lại!");
+                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (!Validation.checkPassWord(newPassword)) {
+                        request.setAttribute("errorMessage", "Password must have at least 6 characters, including uppercase letters, lowercase letters, numbers, and special characters.");
+                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Cập nhật mật khẩu trong database
+                    int updated = dao.updatePassword(cid, newPassword);
+
+                    if (updated > 0) {
+                        request.setAttribute("successMessage", "Đổi mật khẩu thành công!");
+                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("errorMessage", "Có lỗi xảy ra, vui lòng thử lại!");
+                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
