@@ -222,8 +222,9 @@ nav ul li a {
                     <p><strong>Rating:</strong> <%= movie.getAgeRate() %></p>
                     <a href="<%= movie.getTrailerURL() %>" target="_blank">
                         <button class="trailer">Watch Trailer</button>
+                    <a href="buy.jsp">
+                        <button class="buy-ticket">BUY TICKET</button>
                     </a>
-                    <button class="buy-ticket">BUY TICKET</button>
                 </div>
             </div>
         </section>

@@ -179,7 +179,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -233,7 +233,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
