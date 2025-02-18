@@ -1,8 +1,22 @@
-<%@page import="entity.Movie"%>
+<%@page import="entity.Movie, entity.Account"%>
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%
+   
+    
+    Object accObj = session.getAttribute("account");
+    Account account = null;
+    if (accObj instanceof Account) {
+        account = (Account) accObj;
+    }
 
+    boolean isLoggedIn = (account != null);
+    Integer customerID = (Integer) session.getAttribute("CustomerID");
+    
+    
+
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,39 +26,78 @@
     <title>Movie Details</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #b22222;
-            padding: 10px 20px;
-            color: white;
-        }
-        .logo img {
-            height: 50px;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 15px;
-        }
-        nav ul li {
-            display: inline;
-        }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-        }
-        .auth a {
-            color: white;
-            text-decoration: none;
-        }
+     main {
+    flex: 1;
+    padding: 20px;
+}  
+        
+    body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    display: flex;
+    justify-content: space-between; /* Đẩy menu vào giữa, login ra phải */
+    align-items: center;
+    background-color: #b22222;
+    padding: 10px 20px;
+    color: white;
+}
+
+/* Container để chứa menu */
+.nav-container {
+    flex: 1; /* Giúp menu nằm ở giữa */
+    display: flex;
+    justify-content: center; /* Căn giữa menu */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    
+    padding: 10px;
+}
+
+/* Đẩy login ra góc phải */
+.auth {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth p {
+    margin: 0;
+    font-size: 18px;
+    
+}
+
+.auth a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    
+    padding: 10px;
+}
+
+
+
         main {
             padding: 20px;
         }
@@ -78,39 +131,78 @@
         .description {
             margin-top: 20px;
         }
-        footer {
-            background-color: #333;
-            text-align: center;
-            padding: 10px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-        .social-icons img {
-            width: 30px;
-            margin: 0 5px;
-        }
+.footer {
+    background-color: #333 !important;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Khoảng cách giữa các icon */
+    background-color: #333;    
+        padding: 10px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    gap: 8px;
+}
+
+.social-icons img {
+    width: 30px; /* Kích thước logo */
+    height: auto;
+}
+
+        .header logo li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;  /* Đặt kích thước chữ */
+    font-weight: bold;  /* Đặt chữ đậm nếu cần */
+    padding: 10px;
+}
+.footer color{
+    background-color : #333;
+}
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="logo.png" alt="CINEMATIC">
-            <li><a href="home">Home</a></li>
-        </div>
+    <!-- Menu nằm ở giữa -->
+    <div class="nav-container">
         <nav>
             <ul>
-
+                <li><a href="home">HOME</a></li>
                 <li><a href="MovieController?action=list">MOVIES</a></li>
-
                 <li><a href="CimemaController">CINEMAS</a></li>
                 <li><a href="#">MEMBERS</a></li>
             </ul>
         </nav>
-        <div class="auth">
-            <a href="#">Login/Register</a>
-        </div>
-    </header>
+    </div>
+
+    <!-- Login nằm bên phải -->
+    <nav class="auth">
+        <% if (isLoggedIn) { %>
+            <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
+            <a href="logout">Logout</a>
+        <% } else { %>
+            <a href="login.jsp">Login</a>
+        <% } %>
+    </nav>
+</header>
+
+
     
     <main>
         <%
@@ -145,12 +237,12 @@
         <% } %>
     </main>
     
-    <footer>
-        <div class="social-icons">
-            <a href="#"><img src="facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="youtube.png" alt="YouTube"></a>
-            <a href="#"><img src="tiktok.png" alt="TikTok"></a>
-        </div>
+    <footer style ="color">
+<div class="social-icons">
+        <a href="#"><img src="images/facebook.png" alt="Facebook"><span>Facebook</span></a>
+        <a href="#"><img src="images/youtube.png" alt="YouTube"><span>YouTube</span></a>
+        <a href="#"><img src="images/tiktok.png" alt="TikTok"><span>TikTok</span></a>
+    </div>
     </footer>
 </body>
 </html>

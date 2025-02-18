@@ -33,8 +33,8 @@ public class DBConnection {
         }
     }
     public DBConnection(){
-        this("jdbc:sqlserver://localhost:1433;databaseName=SWP391",
-                "sa","123456");
+        this("jdbc:sqlserver://localhost:1433;databaseName=swp391",
+                "sa","sa");
     }
     
     
