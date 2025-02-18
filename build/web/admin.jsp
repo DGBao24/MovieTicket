@@ -4,15 +4,12 @@
     Author     : Tĩnh ăn loz
 --%>
 
-<<<<<<< HEAD
+
 
 <%@ page import="entity.User, utils.Role" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-=======
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="entity.User, utils.Role" %>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || !Role.ADMIN.equals(user.getRole())) {

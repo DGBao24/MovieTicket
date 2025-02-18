@@ -1,10 +1,9 @@
 
 <%@ page import="entity.Account,entity.Movie" %>
 <%@ page import="java.util.List" %>
-<<<<<<< HEAD
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-=======
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
 
 
 <%
@@ -72,24 +71,20 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
                                 <ul class="navbar-nav  ">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="home.jsp">Home <span class="sr-only">(current)</span></a>
-                                    </li>
+                                   
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="MovieController?action=list">Movie </a>
                                     </li>
                                     <% if (isLoggedIn) { %>
-<<<<<<< HEAD
+
                                     <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
-=======
-                                    <p><strong>Xin ch�o, <%= account.getName() %>!</strong></p>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="logout">Logout</a>
                                     </li>
                                     <li class="nav-item">
-<<<<<<< HEAD
+
                                         <a href="#" onclick="showProfile(event)">Your Profile</a>
 
                                         <!-- Div chứa thông tin -->
@@ -102,9 +97,9 @@
                                             <p><a href="account?service=changePassword" class="btn btn-secondary">Đổi mật khẩu</a></p>
                                             <button onclick="closeProfile()">Đóng</button>
                                         </div>
-=======
-                                        <a class="nav-link" href="profile.jsp">Profile</a>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
+                                        
+
                                     </li>
                                     <% } else { %>
                                     <li class="nav-item">
@@ -291,11 +286,9 @@
                         </div>
                         <div class="">
                             <p><span><%= movie.getCountry() %></span></p>
-<<<<<<< HEAD
+
                             <a href="MovieController?action=detail&id=<%= movie.getMovieID()%>">Detail</a>
-=======
-                            <a href="MovieController?action=detail">Detail</a>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
                         </div>
                     </div>
                     <% } 
@@ -348,11 +341,9 @@
                         </div>
                         <div class="">
                             <p><span><%= movie.getCountry() %></span></p>
-<<<<<<< HEAD
+
                             <a href="MovieController?action=detail&id=<%= movie.getMovieID()%>">Detail</a>
-=======
-                            <a href="#">Buy Now</a>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
                         </div>
                     </div>
                     <% } 
@@ -367,7 +358,7 @@
 
         <!-- ring section -->
 
-<<<<<<< HEAD
+
         <!--        <section class="ring_section layout_padding">
                     <div class="design-box">
                         <img src="images/design-1.png" alt="">
@@ -397,7 +388,7 @@
                         </div>
                     </div>
                 </section>-->
-=======
+
 <!--        <section class="ring_section layout_padding">
             <div class="design-box">
                 <img src="images/design-1.png" alt="">
@@ -427,7 +418,7 @@
                 </div>
             </div>
         </section>-->
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
 
 
 
@@ -534,7 +525,7 @@
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/custom.js"></script>
-<<<<<<< HEAD
+
 
         <script>
     function showProfile(event) {
@@ -554,8 +545,7 @@
     }
 </script>
 
-=======
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
     </body>
 
 </html>

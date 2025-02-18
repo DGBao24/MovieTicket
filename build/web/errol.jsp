@@ -3,12 +3,11 @@
     Created on : 12 thg 2, 2025, 19:33:47
     Author     : T?nh ?n loz
 --%>
-<<<<<<< HEAD
+
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-=======
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
 <html>
 <head>
     <title>Access Denied</title>

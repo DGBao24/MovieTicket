@@ -4,11 +4,9 @@
     Author     : Nhat Anh
 --%>
 
-<<<<<<< HEAD
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-=======
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
 <%@ page import="entity.Account" %>
 
 <%
@@ -59,18 +57,13 @@
 </head>
 <body>
     <div class="container">
-        <h2>Chào mừng đến với trang chủ</h2>
+       
 
       
             <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
             <p><a href="account?service=changeCustomerProfile&cid=<%= customerID %>">Your Profile</a></p>
             <p><a href="account?service=changePassword">Change Password</a></p>
-<<<<<<< HEAD
-            
-=======
-            <p><a href="logout">Logout</a></p>
-            <p><a href="home">Home</a></p>
->>>>>>> 0846b438060f7c8b560467be935bd16652350eea
+
     </div>
 </body>
 </html>
