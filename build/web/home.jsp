@@ -80,9 +80,7 @@
 
                                     <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="logout">Logout</a>
-                                    </li>
+                                  
                                     <li class="nav-item">
 
                                         <a href="#" onclick="showProfile(event)">Your Profile</a>
@@ -90,11 +88,13 @@
                                         <!-- Div chứa thông tin -->
                                         <div id="profileContainer" style="display: none; position: absolute; background: white; padding: 15px; border-radius: 8px;
                                              box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 250px;">
-                                            <h3>Thông tin tài khoản</h3>
+                                            <h3>Tài khoản</h3>
                                             <p><strong>Tên:</strong> <%= account.getName() %></p>
                                             <p><strong>Mã khách hàng:</strong> <%= customerID %></p>
                                             <p><a href="account?service=changeCustomerProfile&cid=<%= customerID %>" class="btn btn-primary">Cập nhật hồ sơ</a></p>
                                             <p><a href="account?service=changePassword" class="btn btn-secondary">Đổi mật khẩu</a></p>
+                                            
+                                            <button class="btn" onclick="window.location.href = 'logout'">Logout</button>
                                             <button onclick="closeProfile()">Đóng</button>
                                         </div>
 
@@ -112,10 +112,10 @@
 
                             </div>
                             <div class="quote_btn-container ">
-                                <a href="">
+                                <a href="#">
                                     <img src="images /cart.png" alt="">
                                     <div class="cart_number">
-                                        0
+                                        
                                     </div>
                                 </a>
                                 <form class="form-inline">
