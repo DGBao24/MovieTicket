@@ -54,9 +54,9 @@
 
                                         <label>Gender:</label>
                                         <select name="Gender" required class="form-control">
-                                            <option value="Male" <%= customer.getGender().equals("Male") ? "selected" : "" %>>Male</option>
-                                            <option value="Female" <%= customer.getGender().equals("Female") ? "selected" : "" %>>Female</option>
-                                            <option value="Others" <%= customer.getGender().equals("Others") ? "selected" : "" %>>Others</option>
+                                            <option value="Male" >Male</option>
+                                            <option value="Female" >Female</option>
+                                            <option value="Others" >Others</option>
                                         </select>
                                     </div>
                                     <div class="col-12">
