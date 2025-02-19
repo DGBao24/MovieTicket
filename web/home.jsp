@@ -75,17 +75,16 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="MovieController?action=list">Movie </a>
                                     </li>
+
+                                    <li>
+                                        <a class="nav-link" href="CinemaController">Cinema </a>
+                                    </li>
                                     <% if (isLoggedIn) { %>
 
                                     <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
-                                    <% if (isAdmin) { %>
-                                      <li class="nav-item">
-                                      <a class="nav-link" href="admin.jsp">Manager</a> <!-- Chỉ Admin thấy menu này -->
-                                      </li>
-                                    <% } %>
+                                    
 
                                     <li class="nav-item">
-
                                         <a href="#" onclick="showProfile(event)">Your Profile</a>
 
                                         <!-- Div chứa thông tin -->
@@ -94,16 +93,19 @@
                                             <h3>Tài khoản</h3>
                                             <p><strong>Tên:</strong> <%= account.getName() %></p>
                                             <p><strong>Mã khách hàng:</strong> <%= customerID %></p>
+
+                                            <% if (isAdmin) { %>
+                                            <p><a href="admin.jsp" class="btn btn-warning">Manager</a></p> <!-- Nút chỉ hiển thị cho Admin -->
+                                            <% } %>
+
                                             <p><a href="account?service=changeCustomerProfile&cid=<%= customerID %>" class="btn btn-primary">Cập nhật hồ sơ</a></p>
                                             <p><a href="account?service=changePassword" class="btn btn-secondary">Đổi mật khẩu</a></p>
 
                                             <button class="btn" onclick="window.location.href = 'logout'">Logout</button>
                                             <button onclick="closeProfile()">Đóng</button>
                                         </div>
-
-
-
                                     </li>
+
                                     <% } else { %>
                                     <li class="nav-item">
                                         <a class="nav-link" href="login.jsp">Login</a>
@@ -391,35 +393,35 @@
                     </div>
                 </section>-->
 
-<!--        <section class="ring_section layout_padding">
-            <div class="design-box">
-                <img src="images/design-1.png" alt="">
-            </div>
-            <div class="container">
-                <div class="ring_container layout_padding2">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="detail-box">
-                                <h4>
-                                    special
-                                </h4>
-                                <h2>
-                                    Wedding Ring
-                                </h2>
-                                <a href="buy.jsp">
-                                    Buy Now
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="img-box">
-                                <img src="images/ring-img.jpg" alt="">
+        <!--        <section class="ring_section layout_padding">
+                    <div class="design-box">
+                        <img src="images/design-1.png" alt="">
+                    </div>
+                    <div class="container">
+                        <div class="ring_container layout_padding2">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="detail-box">
+                                        <h4>
+                                            special
+                                        </h4>
+                                        <h2>
+                                            Wedding Ring
+                                        </h2>
+                                        <a href="buy.jsp">
+                                            Buy Now
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="img-box">
+                                        <img src="images/ring-img.jpg" alt="">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>-->
+                </section>-->
 
 
 
@@ -530,20 +532,27 @@
 
 
         <script>
-    function showProfile(event) {
-        event.preventDefault();
-        var profile = document.getElementById('profileContainer');
-        var link = event.target; // Lấy thẻ <a> được click
-        // Định vị vị trí của profile ngay dưới "Your Profile"
-        profile.style.display = 'block';
-        profile.style.position = 'absolute';
-        profile.style.top = (link.offsetTop + link.offsetHeight) + 'px';
-        profile.style.left = link.offsetLeft + 'px';
-    }
-    function closeProfile() {
-        document.getElementById('profileContainer').style.display = 'none';
-    }
-</script>
+                                                function showProfile(event) {
+                                                    event.preventDefault();
+                                                    var profile = document.getElementById('profileContainer');
+                                                    var link = event.target; // Lấy thẻ <a> được click
+
+                                                    // Lấy vị trí chính xác của "Your Profile"
+                                                    var rect = link.getBoundingClientRect();
+                                                    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+                                                    var scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+                                                    profile.style.display = 'block';
+                                                    profile.style.position = 'absolute';
+                                                    profile.style.top = (rect.top + rect.height + scrollTop) + 'px';
+                                                    profile.style.left = (rect.left + scrollLeft) + 'px';
+                                                }
+
+                                                function closeProfile() {
+                                                    document.getElementById('profileContainer').style.display = 'none';
+                                                }
+
+        </script>
 
 
     </body>
