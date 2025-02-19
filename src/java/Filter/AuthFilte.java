@@ -140,7 +140,7 @@ public class AuthFilte implements Filter {
         boolean isUserManagement = url.equals(contextPath + "/admin/users");
 
         // Kiểm tra người dùng đã đăng nhập hay chưa
-        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
+        boolean isLoggedIn = (session != null && session.getAttribute("account") != null);
         boolean isAdmin = (session != null && "ADMIN".equals(session.getAttribute("role")));
 
         // Nếu chưa đăng nhập mà vào các trang yêu cầu đăng nhập -> Chuyển hướng đến login

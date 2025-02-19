@@ -43,64 +43,64 @@
                 max-width: 100%; /* Đảm bảo chiều rộng tối đa */
                 box-sizing: border-box; /* Đảm bảo padding không làm phần tử bị rộng quá */
             }
-            
-            
-header {
-    display: flex;
-    justify-content: space-between; /* Đẩy menu vào giữa, login ra phải */
-    align-items: center;
-    background-color: #b22222;
-    padding: 10px 20px;
-    color: white;
-}
 
-/* Container để chứa menu */
-.nav-container {
-    flex: 1; /* Giúp menu nằm ở giữa */
-    display: flex;
-    justify-content: center; /* Căn giữa menu */
-}
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-}
+            header {
+                display: flex;
+                justify-content: space-between; /* Đẩy menu vào giữa, login ra phải */
+                align-items: center;
+                background-color: #b22222;
+                padding: 10px 20px;
+                color: white;
+            }
 
-nav ul li {
-    display: inline;
-}
+            /* Container để chứa menu */
+            .nav-container {
+                flex: 1; /* Giúp menu nằm ở giữa */
+                display: flex;
+                justify-content: center; /* Căn giữa menu */
+            }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    
-    padding: 10px;
-}
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+                padding: 0;
+                margin: 0;
+            }
 
-/* Đẩy login ra góc phải */
-.auth {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+            nav ul li {
+                display: inline;
+            }
 
-.auth p {
-    margin: 0;
-    font-size: 18px;
-    
-}
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-size: 18px;
 
-.auth a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    
-    padding: 10px;
-}
+                padding: 10px;
+            }
+
+            /* Đẩy login ra góc phải */
+            .auth {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .auth p {
+                margin: 0;
+                font-size: 18px;
+
+            }
+
+            .auth a {
+                color: white;
+                text-decoration: none;
+                font-size: 18px;
+
+                padding: 10px;
+            }
             main {
                 padding: 20px;
             }
@@ -233,54 +233,54 @@ nav ul li a {
                 z-index: 1000; /* Đảm bảo navbar luôn nằm trên các phần tử khác */
                 width: 100%; /* Đảm bảo chiều rộng của navbar luôn là 100% */
             }
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Khoảng cách giữa các icon */
-}
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 20px; /* Khoảng cách giữa các icon */
+            }
 
-.social-icons a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white; /* Màu chữ */
-    font-size: 16px;
-    font-weight: bold;
-    gap: 8px; /* Khoảng cách giữa logo và chữ */
-}
+            .social-icons a {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: white; /* Màu chữ */
+                font-size: 16px;
+                font-weight: bold;
+                gap: 8px; /* Khoảng cách giữa logo và chữ */
+            }
 
-.social-icons img {
-    width: 30px; /* Kích thước logo */
-    height: auto;
-}
+            .social-icons img {
+                width: 30px; /* Kích thước logo */
+                height: auto;
+            }
 
 
         </style>
     </head>
     <body>
-<header>
-    <!-- Menu nằm ở giữa -->
-    <div class="nav-container">
-        <nav>
-            <ul>
-                <li><a href="home">HOME</a></li>
-                <li><a href="MovieController?action=list">MOVIES</a></li>
-                <li><a href="CimemaController">CINEMAS</a></li>
-                <li><a href="#">MEMBERS</a></li>
-            </ul>
-        </nav>
-    </div>
+        <header>
+            <!-- Menu nằm ở giữa -->
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="home">HOME</a></li>
+                        <li><a href="MovieController?action=list">MOVIES</a></li>
+                        <li><a href="CimemaController">CINEMAS</a></li>
+                        <li><a href="#">MEMBERS</a></li>
+                    </ul>
+                </nav>
+            </div>
 
-    <!-- Login nằm bên phải -->
-    <nav class="auth">
-        <% if (isLoggedIn) { %>
-            <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
-            <a href="logout">Logout</a>
-        <% } else { %>
-            <a href="login.jsp">Login</a>
-        <% } %>
-    </nav>
-</header>
+            <!-- Login nằm bên phải -->
+            <nav class="auth">
+                <% if (isLoggedIn) { %>
+                <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
+                <a href="logout">Logout</a>
+                <% } else { %>
+                <a href="login.jsp">Login</a>
+                <% } %>
+            </nav>
+        </header>
 
 
         <main>
@@ -310,11 +310,11 @@ nav ul li a {
         </main>
 
         <footer>
-<div class="social-icons">
-        <a href="#"><img src="images/facebook.png" alt="Facebook"><span>Facebook</span></a>
-        <a href="#"><img src="images/youtube.png" alt="YouTube"><span>YouTube</span></a>
-        <a href="#"><img src="images/tiktok.png" alt="TikTok"><span>TikTok</span></a>
-    </div>
+            <div class="social-icons">
+                <a href="#"><img src="images/facebook.png" alt="Facebook"><span>Facebook</span></a>
+                <a href="#"><img src="images/youtube.png" alt="YouTube"><span>YouTube</span></a>
+                <a href="#"><img src="images/tiktok.png" alt="TikTok"><span>TikTok</span></a>
+            </div>
         </footer>
 
         <script src="script.js"></script>
