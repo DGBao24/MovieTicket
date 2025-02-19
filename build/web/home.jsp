@@ -16,6 +16,7 @@
     }
 
     boolean isLoggedIn = (account != null);
+    boolean isAdmin = isLoggedIn && "admin".equalsIgnoreCase(account.getRole());
     Integer customerID = (Integer) session.getAttribute("CustomerID");
     
     
@@ -79,7 +80,11 @@
                                     <% if (isLoggedIn) { %>
 
                                     <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
-
+                                    <% if (isAdmin) { %>
+                                      <li class="nav-item">
+                                      <a class="nav-link" href="admin.jsp">Quản lý</a> <!-- Chỉ Admin thấy menu này -->
+                                      </li>
+                                    <% } %>
                                   
                                     <li class="nav-item">
 
