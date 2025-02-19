@@ -6,12 +6,12 @@
 
 
 
-<%@ page import="entity.User, utils.Role" %>
+<%@ page import="entity.Account, utils.Role" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
 <%
-    User user = (User) session.getAttribute("user");
+    Account user = (Account) session.getAttribute("account");
     if (user == null || !Role.ADMIN.equals(user.getRole())) {
         response.sendRedirect("error.jsp");
         return;

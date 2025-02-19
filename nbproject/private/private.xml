@@ -2,33 +2,34 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-
         <group>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/css/style.css</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/css/style.scss</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/LoginController.java</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/movie.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/forgetPassword.jsp</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/JSP/customerProfile.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/detailmovie.jsp</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/login.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/home.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/JSP/changePassword.jsp</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/CustomerAccountController.java</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/index.html</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/newPassword.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/profile.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/OTPConfirm.jsp</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/signup.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/css/style.css.map</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/Filter/AuthFilte.java</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/cinema.jsp</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/admin.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/model/DAOAccount.java</file>
-            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/MovieController.java</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/buy.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/css/style.css</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/css/style.scss</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/movie.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/ForgotPassword.java</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/JSP/customerProfile.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/login.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/CustomerAccountController.java</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/newPassword.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/model/DBConnection.java</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/signup.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/admin.jsp</file>
+            <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/src/java/controller/MovieController.java</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/errol.jsp</file>
             <file>file:/C:/Users/Nhat%20Anh/Documents/Zalo%20Received%20Files/bc6/web/dashboard.jsp</file>
         </group>
-
     </open-files>
 </project-private>

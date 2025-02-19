@@ -14,12 +14,11 @@
     if (accObj instanceof Account) {
         account = (Account) accObj;
     }
-
     boolean isLoggedIn = (account != null);
+    boolean isAdmin = isLoggedIn && "admin".equalsIgnoreCase(account.getRole());
     Integer customerID = (Integer) session.getAttribute("CustomerID");
     
     
-
 %>
 <!DOCTYPE html>
 <html>
@@ -71,7 +70,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
                                 <ul class="navbar-nav  ">
-                                   
+
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="MovieController?action=list">Movie </a>
@@ -79,8 +78,12 @@
                                     <% if (isLoggedIn) { %>
 
                                     <p><strong>Xin chào, <%= account.getName() %>!</strong></p>
+                                    <% if (isAdmin) { %>
+                                      <li class="nav-item">
+                                      <a class="nav-link" href="admin.jsp">Manager</a> <!-- Chỉ Admin thấy menu này -->
+                                      </li>
+                                    <% } %>
 
-                                  
                                     <li class="nav-item">
 
                                         <a href="#" onclick="showProfile(event)">Your Profile</a>
@@ -93,12 +96,12 @@
                                             <p><strong>Mã khách hàng:</strong> <%= customerID %></p>
                                             <p><a href="account?service=changeCustomerProfile&cid=<%= customerID %>" class="btn btn-primary">Cập nhật hồ sơ</a></p>
                                             <p><a href="account?service=changePassword" class="btn btn-secondary">Đổi mật khẩu</a></p>
-                                            
+
                                             <button class="btn" onclick="window.location.href = 'logout'">Logout</button>
                                             <button onclick="closeProfile()">Đóng</button>
                                         </div>
 
-                                        
+
 
                                     </li>
                                     <% } else { %>
@@ -115,7 +118,7 @@
                                 <a href="#">
                                     <img src="images /cart.png" alt="">
                                     <div class="cart_number">
-                                        
+
                                     </div>
                                 </a>
                                 <form class="form-inline">
@@ -179,7 +182,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +209,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -233,7 +236,7 @@
                                                 aptent taciti sociosqu ad litora torquent per conubia nostra
                                             </p>
                                             <div>
-                                                <a href="">Order Now</a>
+                                                <a href="buy.jsp">Order Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -263,7 +266,6 @@
                     <% if (list != null && list.size() >= 3) { 
                        for (int i = list.size() - 3; i < list.size(); i++) { 
                                 Movie movie = list.get(i);
-
                     %>
                     <div class="box">
                         <div class="img-box">
@@ -532,14 +534,12 @@
         event.preventDefault();
         var profile = document.getElementById('profileContainer');
         var link = event.target; // Lấy thẻ <a> được click
-
         // Định vị vị trí của profile ngay dưới "Your Profile"
         profile.style.display = 'block';
         profile.style.position = 'absolute';
         profile.style.top = (link.offsetTop + link.offsetHeight) + 'px';
         profile.style.left = link.offsetLeft + 'px';
     }
-
     function closeProfile() {
         document.getElementById('profileContainer').style.display = 'none';
     }

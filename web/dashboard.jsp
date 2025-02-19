@@ -9,9 +9,9 @@
 
 
 
-<%@ page import="entity.User" %>
+<%@ page import="entity.Account" %>
 <%
-    User user = (User) session.getAttribute("user");
+    Account user = (Account) session.getAttribute("account");
     if (user == null) {
         response.sendRedirect("login.jsp");
         return;
@@ -22,8 +22,8 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h2>Welcome, <%= user.getUsername() %>!</h2>
-    <a href="admin.jsp">Admin Page</a> | <a href="user.jsp">User Page</a> | <a href="logout">Logout</a>
+    <h2>Welcome, <%= user.getName() %>!</h2>
+    <a href="admin.jsp">Admin Page</a> | <a href="home">User Page</a> | <a href="logout">Logout</a>
 </body>
 </html>
 
