@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Account;
+import entity.Image;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,12 +17,25 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 import model.DAOAccount;
 import utils.Validation;
+import java.io.File;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.annotation.MultipartConfig;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import model.DAOImage;
 
 /**
  *
  * @author pdatt
  */
+
 @WebServlet(name = "CustomerAccountController", urlPatterns = {"/account"})
+
 public class CustomerAccountController extends HttpServlet {
 
     /**
@@ -38,10 +52,11 @@ public class CustomerAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         DAOAccount dao = new DAOAccount();
-
+        DAOImage daoImage = new DAOImage();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("service");
+            
 
             if (service.equals("changeCustomerProfile")) {
                 Integer cid = (Integer) session.getAttribute("CustomerID");
@@ -56,19 +71,20 @@ public class CustomerAccountController extends HttpServlet {
 
                 if (submit == null) {
                     request.setAttribute("dataCustomer", customer);
-                    request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                    request.getRequestDispatcher("Profile.jsp").forward(request, response);
                 } else {
-                    
+
                     request.setCharacterEncoding("UTF-8");
                     String Name = request.getParameter("Name");
 
                     String Address = request.getParameter("Address");
                     String PhoneNum = request.getParameter("PhoneNum");
                     String YearOfBirth = request.getParameter("YearOfBirth");
-                     String Gender = request.getParameter("Gender");
+                    String Gender = request.getParameter("Gender");
+
                     if (Name.isEmpty() || Address.isEmpty() || PhoneNum.isEmpty() || YearOfBirth.isEmpty() || Gender.isEmpty()) {
                         request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
-                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
                         return;
                     }
 
@@ -77,7 +93,7 @@ public class CustomerAccountController extends HttpServlet {
                         YearOfBirtH = Integer.parseInt(YearOfBirth);
                     } catch (NumberFormatException e) {
                         request.setAttribute("errorMessage", "Năm sinh không hợp lệ!");
-                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
                         return;
                     }
 
@@ -87,15 +103,14 @@ public class CustomerAccountController extends HttpServlet {
 
                     if (updated > 0) {
 
-                        
-                        Account updatedCustomer = dao.getAccountById(customer.getAccountID()); 
-                        session.setAttribute("account", updatedCustomer); 
+                        Account updatedCustomer = dao.getAccountById(customer.getAccountID());
+                        session.setAttribute("account", updatedCustomer);
 
                         request.setAttribute("successMessage", "Cập nhật thông tin thành công!");
-                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
                     } else {
                         request.setAttribute("errorMessage", "Cập nhật thất bại, vui lòng thử lại!");
-                        request.getRequestDispatcher("/JSP/customerProfile.jsp").forward(request, response);
+                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
                     }
                 }
             }
@@ -113,7 +128,7 @@ public class CustomerAccountController extends HttpServlet {
 
                 if (submit == null) {
                     request.setAttribute("dataCustomer", customer);
-                    request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                 } else {
                     String currentPassword = request.getParameter("currentPassword");
                     String newPassword = request.getParameter("newPassword");
@@ -122,27 +137,27 @@ public class CustomerAccountController extends HttpServlet {
                     // Kiểm tra nếu có ô nào bị bỏ trống
                     if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                         request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
-                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                         return;
                     }
 
                     // Kiểm tra mật khẩu cũ có đúng không
                     if (!customer.getPassword().equals(currentPassword)) {
                         request.setAttribute("errorMessage", "Mật khẩu cũ không chính xác!");
-                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                         return;
                     }
 
                     // Kiểm tra mật khẩu mới và xác nhận mật khẩu mới có khớp không
                     if (!newPassword.equals(confirmPassword)) {
                         request.setAttribute("errorMessage", "Mật khẩu mới không khớp, vui lòng nhập lại!");
-                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                         return;
                     }
 
                     if (!Validation.checkPassWord(newPassword)) {
                         request.setAttribute("errorMessage", "Password must have at least 6 characters, including uppercase letters, lowercase letters, numbers, and special characters.");
-                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                         return;
                     }
 
@@ -154,11 +169,13 @@ public class CustomerAccountController extends HttpServlet {
                         request.getRequestDispatcher("home.jsp").forward(request, response);
                     } else {
                         request.setAttribute("errorMessage", "Có lỗi xảy ra, vui lòng thử lại!");
-                        request.getRequestDispatcher("/JSP/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
                     }
                 }
 
             }
+
+            
 
         }
     }

@@ -1,26 +1,13 @@
-<%@ page import="entity.Account" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Feb 28, 2025, 1:17:16 PM
+    Author     : Nhat Anh
+*/
 
-<%
-    Integer customerID = (Integer) session.getAttribute("CustomerID");
-        if (customerID == null) {
-        response.sendRedirect("login.jsp");
-        return;
-}
-    Account customer = (Account) session.getAttribute("account");
-    String errorMessage = (String) request.getAttribute("errorMessage");
-    String successMessage = (String) request.getAttribute("successMessage");
-%>
-
-<!DOCTYPE html>
-<html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cập nhật thông tin</title>
-        <style>
-            body {
+body {
                 font-family: "Poppins", sans-serif;
                 color: #0c0c0c;
                 background-color: #ffffff;
@@ -129,75 +116,3 @@
                 background-color: #d4edda;
                 color: #155724;
             }
-
-
-        </style>
-
-</head>
-<body>
-        <%-- Hiển thị thông báo nếu có lỗi --%>
-        <% if (errorMessage != null) { %>
-    <div class="alert alert-danger alert-banner"><%= errorMessage %></div>
-    <% } %>
-
-    <%-- Hiển thị thông báo thành công nếu có --%>
-    <% if (successMessage != null) { %>
-    <div class="alert alert-success alert-banner"><%= successMessage %></div>
-    <% } %>
-
-    <div class="container">
-        <h2>Cập nhật thông tin</h2>
-
-
-        <form action="account" method="post">
-            <input type="hidden" name="service" value="changeCustomerProfile">
-
-            <div class="form-group">
-                <label for="Name">Họ và Tên:</label>
-                <input type="text" name="Name" value="<%= customer.getName() %>" required>
-            </div>
-
-            <div class="form-group">
-                <label>Năm sinh:</label>
-                <input type="number" name="YearOfBirth" value="<%= customer.getYearOfBirth() %>" required>
-            </div>
-
-            <div class="form-group">
-                <label>Email:</label>
-                <input type="email" name="Email" value="<%= customer.getEmail() %>" readonly>
-            </div>
-
-            <div class="form-group">
-                <label>Gender:</label>
-                <select name="Gender" required class="form-control">
-                    <option value="Male" <%= customer.getGender().equals("Male") ? "selected" : "" %>>Male</option>
-                    <option value="Female" <%= customer.getGender().equals("Female") ? "selected" : "" %>>Female</option>
-                    <option value="Others" <%= customer.getGender().equals("Others") ? "selected" : "" %>>Others</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Số điện thoại:</label>
-                <input type="text" name="PhoneNum" value="<%= customer.getPhoneNum() %>" required>
-            </div>
-
-            <div class="form-group">
-                <label>Địa chỉ:</label>
-                <input type="text" name="Address" value="<%= customer.getAddress() %>" required>
-            </div>
-
-            <div class="btn-container">
-                <button type="submit" name="submit" class="btn">Lưu thay đổi</button>
-            </div>
-        </form>
-        <br>
-
-        <div class="btn-container">
-            <button class="btn" onclick="window.location.href = 'account?service=changePassword'">Đổi Mật Khẩu</button>
-            <button class="btn" onclick="window.location.href = 'home'">Về Trang Chủ</button>
-        </div>
-
-    </div>
-
-</body>
-</html>

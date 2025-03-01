@@ -117,6 +117,7 @@ public class AuthFilte implements Filter {
         boolean isLogoutPage = url.equals(contextPath + "/logout");
         boolean isResetPassword = url.equals(contextPath + "/reset-pass");
         boolean isChangePassword = url.equals(contextPath + "/profile/change-pass");
+        boolean isChangeAvatar = url.contains(contextPath + "/account") && "ChangeAvatar".equals(req.getParameter("service"));
 
         // Nhóm 2: Kiểm tra các request truy cập nội dung
         boolean isHomePage = url.equals(contextPath + "/home.jsp");

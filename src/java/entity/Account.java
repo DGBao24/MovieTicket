@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.List;
 /**
  *
  * @author pdatt
@@ -13,11 +14,59 @@ public class Account {
     private String PhoneNum;
     private String Address;
     private int YearOfBirth;
+    private String Gender; 
+    private Image Avatar;
+    private int LoyaltyPoint;
+    private String MembershipLevel;
     private boolean Status;
     private String role;
-    private String Gender; 
+   
+
+    public Account(int accountID, String Name, String Email, String Password, String PhoneNum, String Address, int YearOfBirth, String Gender, Image Avatar, int LoyaltyPoint, String MembershipLevel, boolean Status, String role) {
+        this.accountID = accountID;
+        this.Name = Name;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNum = PhoneNum;
+        this.Address = Address;
+        this.YearOfBirth = YearOfBirth;
+        this.Gender = Gender;
+        this.Avatar = Avatar;
+        this.LoyaltyPoint = LoyaltyPoint;
+        this.MembershipLevel = MembershipLevel;
+        this.Status = Status;
+        this.role = role;
+    }
+
+    
+    
+    public Image getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(Image Avatar) {
+        this.Avatar = Avatar;
+    }
+
+    public int getLoyaltyPoint() {
+        return LoyaltyPoint;
+    }
+
+    public String getMembershipLevel() {
+        return MembershipLevel;
+    }
+
+
+    public void setLoyaltyPoint(int LoyaltyPoint) {
+        this.LoyaltyPoint = LoyaltyPoint;
+    }
+    
 
     public Account() {
+    }
+
+    public void setMembershipLevel(String MembershipLevel) {
+        this.MembershipLevel = MembershipLevel;
     }
 
     public Account(int accountID, String Name, String PhoneNum, String Address, int YearOfBirth, String Gender) {
@@ -51,6 +100,11 @@ public class Account {
         this.YearOfBirth = YearOfBirth;
         this.Status = Status;
         this.Gender = Gender;
+    }
+
+    public Account(int accountID, Image Avatar) {
+        this.accountID = accountID;
+        this.Avatar = Avatar;
     }
 
     public Account(int accountID, String Name, String Email, String Password, String PhoneNum, String Address, int YearOfBirth, boolean Status, String role, String Gender) {
@@ -148,6 +202,8 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "accountID=" + accountID + ", Name=" + Name + ", Email=" + Email + ", Password=" + Password + ", PhoneNum=" + PhoneNum + ", Address=" + Address + ", YearOfBirth=" + YearOfBirth + ", Status=" + Status + ", role=" + role + ", Gender=" + Gender + '}';
+        return "Account{" + "accountID=" + accountID + ", Name=" + Name + ", Email=" + Email + ", Password=" + Password + ", PhoneNum=" + PhoneNum + ", Address=" + Address + ", YearOfBirth=" + YearOfBirth + ", Gender=" + Gender + ", Avatar=" + Avatar + ", LoyaltyPoint=" + LoyaltyPoint + ", MembershipLevel=" + MembershipLevel + ", Status=" + Status + ", role=" + role + '}';
     }
+
+    
 }

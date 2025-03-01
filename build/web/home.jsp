@@ -200,6 +200,7 @@
                         <li><a href="login.jsp">Login</a></li>
                             <% } %>
                     </ul>
+                    <li><a href="account?service=changeCustomerProfile">profile</a></li>
                 </div>
 
                 <% if (isLoggedIn) { %>
@@ -215,7 +216,7 @@
                         <p><a href="admin.jsp" class="btn btn-warning">Manager</a></p>
                         <% } %>
 
-                        <p><a href="account?service=changeCustomerProfile&cid=<%= customerID %>" class="btn btn-primary">Cập nhật hồ sơ</a></p>
+                        <p><a href="account?service=changeCustomerProfile" class="btn btn-primary">Cập nhật hồ sơ</a></p>
                         <p><a href="account?service=changePassword" class="btn btn-secondary">Đổi mật khẩu</a></p>
                         <p><a href="logout" class="btn btn-danger">Logout</a></p> <!-- Thêm nút Logout vào Profile -->
                         <button onclick="closeProfile()">Đóng</button>
