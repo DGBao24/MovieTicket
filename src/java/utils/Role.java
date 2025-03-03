@@ -9,6 +9,6 @@ package utils;
  * @author Tĩnh ăn loz
  */
 public class Role {
-    public static final String ADMIN = "ADMIN";
+    public static final String ADMIN = "Admin";
     public static final String USER = "Customer";
 }

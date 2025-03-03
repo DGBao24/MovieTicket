@@ -117,7 +117,7 @@ public class AvatarController extends HttpServlet {
 //                    customer.setAvatar(newAvatar);
                             session.setAttribute("account", updatedCustomer);
 
-                            response.sendRedirect("home.jsp?success=1");
+                            response.sendRedirect("AvatarController?service=ChangeAvatar");
                         } else {
                             request.setAttribute("errorMessage", "Cập nhật avatar thất bại!");
                             request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);

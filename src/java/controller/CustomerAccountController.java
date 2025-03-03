@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import model.DAOImage;
@@ -33,7 +34,6 @@ import model.DAOImage;
  *
  * @author pdatt
  */
-
 @WebServlet(name = "CustomerAccountController", urlPatterns = {"/account"})
 
 public class CustomerAccountController extends HttpServlet {
@@ -56,7 +56,6 @@ public class CustomerAccountController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("service");
-            
 
             if (service.equals("changeCustomerProfile")) {
                 Integer cid = (Integer) session.getAttribute("CustomerID");
@@ -175,7 +174,11 @@ public class CustomerAccountController extends HttpServlet {
 
             }
 
-            
+            if (service.equals("ListAllCustomer")) {
+                List<Account> customers = dao.getAllCustomers(); 
+                request.setAttribute("customers", customers); 
+                request.getRequestDispatcher("/admin/account-management.jsp").forward(request, response);
+            }
 
         }
     }

@@ -136,13 +136,20 @@ public class AuthFilte implements Filter {
         boolean isConfirmOrder = url.equals(contextPath + "/orders/confirm");
 
         // Nhóm 5: Kiểm tra các request liên quan đến trang quản trị
-        boolean isAdminDashboard = url.equals(contextPath + "/admin/dashboard");
-        boolean isOrderManagement = url.equals(contextPath + "/admin/orders");
-        boolean isUserManagement = url.equals(contextPath + "/admin/users");
 
         // Kiểm tra người dùng đã đăng nhập hay chưa
         boolean isLoggedIn = (session != null && session.getAttribute("account") != null);
-        boolean isAdmin = (session != null && "ADMIN".equals(session.getAttribute("role")));
+        if(isLoggedIn){
+        Account acc = (Account)session.getAttribute("account");
+        boolean isAdmin = (session != null && acc.getRole().equals("Admin"));
+        boolean isAdminDashboard = url.equals(contextPath + "/admin/dashboard");
+        boolean isOrderManagement = url.equals(contextPath + "/admin/orders");
+        boolean isUserManagement = url.equals(contextPath + "/admin/users");
+        if (!isAdmin && (isAdminDashboard || isOrderManagement || isUserManagement)) {
+            res.sendRedirect(contextPath + "/home.jsp");
+            return;
+        }
+        }
 
         // Nếu chưa đăng nhập mà vào các trang yêu cầu đăng nhập -> Chuyển hướng đến login
         if (!isLoggedIn && (isBuyPage || isCartPage || isCheckoutPage || isPaymentPage || isMyOrders)) {
@@ -151,10 +158,6 @@ public class AuthFilte implements Filter {
         }
 
         // Nếu không phải admin mà vào trang quản trị -> Chuyển hướng về home
-        if (!isAdmin && (isAdminDashboard || isOrderManagement || isUserManagement)) {
-            res.sendRedirect(contextPath + "/home.jsp");
-            return;
-        }
 
         // Cho phép request tiếp tục nếu không bị chặn
         chain.doFilter(request, response);

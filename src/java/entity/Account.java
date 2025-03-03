@@ -20,7 +20,7 @@ public class Account {
     private String MembershipLevel;
     private boolean Status;
     private String role;
-   
+    private int AvatarID;
 
     public Account(int accountID, String Name, String Email, String Password, String PhoneNum, String Address, int YearOfBirth, String Gender, Image Avatar, int LoyaltyPoint, String MembershipLevel, boolean Status, String role) {
         this.accountID = accountID;
@@ -36,6 +36,30 @@ public class Account {
         this.MembershipLevel = MembershipLevel;
         this.Status = Status;
         this.role = role;
+    }
+
+    public Account(int accountID, String Name, String Email, String Password, String PhoneNum, String Address, int YearOfBirth, String Gender, int LoyaltyPoint, String MembershipLevel, boolean Status, String role, int AvatarID) {
+        this.accountID = accountID;
+        this.Name = Name;
+        this.Email = Email;
+        this.Password = Password;
+        this.PhoneNum = PhoneNum;
+        this.Address = Address;
+        this.YearOfBirth = YearOfBirth;
+        this.Gender = Gender;
+        this.LoyaltyPoint = LoyaltyPoint;
+        this.MembershipLevel = MembershipLevel;
+        this.Status = Status;
+        this.role = role;
+        this.AvatarID = AvatarID;
+    }
+
+    public int getAvatarID() {
+        return AvatarID;
+    }
+
+    public void setAvatarID(int AvatarID) {
+        this.AvatarID = AvatarID;
     }
 
     
@@ -202,8 +226,10 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "accountID=" + accountID + ", Name=" + Name + ", Email=" + Email + ", Password=" + Password + ", PhoneNum=" + PhoneNum + ", Address=" + Address + ", YearOfBirth=" + YearOfBirth + ", Gender=" + Gender + ", Avatar=" + Avatar + ", LoyaltyPoint=" + LoyaltyPoint + ", MembershipLevel=" + MembershipLevel + ", Status=" + Status + ", role=" + role + '}';
+        return "Account{" + "accountID=" + accountID + ", Name=" + Name + ", Email=" + Email + ", Password=" + Password + ", PhoneNum=" + PhoneNum + ", Address=" + Address + ", YearOfBirth=" + YearOfBirth + ", Gender=" + Gender + ", LoyaltyPoint=" + LoyaltyPoint + ", MembershipLevel=" + MembershipLevel + ", Status=" + Status + ", role=" + role + ", AvatarID=" + AvatarID + '}';
     }
+
+    
 
     
 }

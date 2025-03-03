@@ -10,7 +10,7 @@
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/Profile.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/home.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/CustomerAccountController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/JSP/changePassword.jsp</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/changePassword.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/css/changeProfile.css</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/signup.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/admin.jsp</file>
@@ -28,6 +28,11 @@
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/entity/Movie.java</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/cinema.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/AvatarController.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/HomeControll.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/CimemaController.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/Menulist.jsp</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/OTPConfirm.jsp</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/ProfileController.java</file>
         </group>
     </open-files>
 </project-private>

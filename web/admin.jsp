@@ -12,7 +12,7 @@
 
 <%
     Account user = (Account) session.getAttribute("account");
-    if (user == null || !Role.ADMIN.equals(user.getRole())) {
+    if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
         response.sendRedirect("error.jsp");
         return;
     }
@@ -24,6 +24,7 @@
 <body>
     <h2>Admin Panel</h2>
     <a href="dashboard.jsp">Back to Dashboard</a>
+    <a href="account?service=ListAllCustomer">Account Manager</a>
 </body>
 </html>
 

@@ -213,7 +213,7 @@
                         <p style="color: black"><strong>Mã khách hàng:</strong> <%= customerID %></p>
 
                         <% if (isAdmin) { %>
-                        <p><a href="admin.jsp" class="btn btn-warning">Manager</a></p>
+                        <p><a href="admin" class="btn btn-warning">Manager</a></p>
                         <% } %>
 
                         <p><a href="account?service=changeCustomerProfile" class="btn btn-primary">Cập nhật hồ sơ</a></p>
@@ -329,8 +329,8 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-                    </div>
-                    </div>
+                   
+                    
 
                 </section>
                 <!-- end slider section -->

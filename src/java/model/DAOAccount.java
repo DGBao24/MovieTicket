@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -194,7 +196,7 @@ public class DAOAccount extends DBConnection {
 
     public int createAccount(Account customer) {
         int affectedRow = 0;
-        String sql = "INSERT INTO Account (Name, Email, Password, PhoneNum, Address, YearOfBirth, Status, Role, Gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Account (Name, Email, Password, PhoneNumber, Address, YearOfBirth, Status, Role, Gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, customer.getName());
@@ -285,6 +287,54 @@ public class DAOAccount extends DBConnection {
         }
         return n;
     }
+    
+    public List<Account> getAllCustomers() {
+    List<Account> customerList = new ArrayList<>();
+    String sql = "SELECT * FROM Account";
+    Statement state;
+    ResultSet rs = null;
+
+    try {
+        state = conn.createStatement();
+        rs = state.executeQuery(sql);
+        
+        while (rs.next()) {
+            
+            int accountID = rs.getInt("accountID");
+            String Name = rs.getString("Name");
+            String Email = rs.getString("Email");
+            String Password = rs.getString("Password");
+            String PhoneNumber = rs.getString("PhoneNumber");
+            String Address = rs.getString("Address");
+            int YearOfBirth = rs.getInt("YearOfBirth");
+            String Gender = rs.getString("Gender");
+            int LoyaltyPoint = rs.getInt("LoyaltyPoint");
+            String MembershipLevel = rs.getString("MembershipLevel");
+            boolean Status = rs.getBoolean("Status");
+            String Role = rs.getString("Role");
+            int AvatarID = rs.getInt("Avatar");
+            
+            
+
+            // Tạo đối tượng Account và thêm vào danh sách
+            Account account = new Account(accountID, Name, Email, Password, PhoneNumber, Address, YearOfBirth, Gender, LoyaltyPoint,MembershipLevel, Status, Role, AvatarID);
+            customerList.add(account);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    return customerList;
+}
+
+    
+    
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
@@ -316,32 +366,40 @@ public class DAOAccount extends DBConnection {
 //    } else {
 //        System.out.println("Không tìm thấy tài khoản với ID: " + accountId);
 //    }
-        String email = "john.doe@example.com";
-        String password = "password123";
 
-        // Gọi phương thức AccountLogin
-        Account account = dao.AccountLogin(email, password);
 
-        // Kiểm tra kết quả đăng nhập và in ra thông tin nếu đăng nhập thành công
-        if (account != null) {
-            System.out.println("Đăng nhập thành công!");
-            System.out.println("Account ID: " + account.getAccountID());
-            System.out.println("Name: " + account.getName());
-            System.out.println("Email: " + account.getEmail());
-            System.out.println("Gender: " + account.getGender());
-            System.out.println("Phone: " + account.getPhoneNum());
-            System.out.println("Address: " + account.getAddress());
-            System.out.println("Year Of Birth: " + account.getYearOfBirth());
-            System.out.println("Loyalty Point: " + account.getLoyaltyPoint());
-            System.out.println("Membership Level: " + account.getMembershipLevel());
-            // Nếu có avatar, bạn có thể in thêm thông tin liên quan
-            if (account.getAvatar() != null) {
-                System.out.println("Avatar Image ID: " + account.getAvatar().getImageID());
-                System.out.println("Avatar Image Path: " + account.getAvatar().getImagePath());
-            }
-        } else {
-            System.out.println("Đăng nhập thất bại: không tìm thấy tài khoản với thông tin đã cung cấp.");
-        }
+//        String email = "john.doe@example.com";
+//        String password = "password123";
+//
+//        // Gọi phương thức AccountLogin
+//        Account account = dao.AccountLogin(email, password);
+//
+//        // Kiểm tra kết quả đăng nhập và in ra thông tin nếu đăng nhập thành công
+//        if (account != null) {
+//            System.out.println("Đăng nhập thành công!");
+//            System.out.println("Account ID: " + account.getAccountID());
+//            System.out.println("Name: " + account.getName());
+//            System.out.println("Email: " + account.getEmail());
+//            System.out.println("Gender: " + account.getGender());
+//            System.out.println("Phone: " + account.getPhoneNum());
+//            System.out.println("Address: " + account.getAddress());
+//            System.out.println("Year Of Birth: " + account.getYearOfBirth());
+//            System.out.println("Loyalty Point: " + account.getLoyaltyPoint());
+//            System.out.println("Membership Level: " + account.getMembershipLevel());
+//            // Nếu có avatar, bạn có thể in thêm thông tin liên quan
+//            if (account.getAvatar() != null) {
+//                System.out.println("Avatar Image ID: " + account.getAvatar().getImageID());
+//                System.out.println("Avatar Image Path: " + account.getAvatar().getImagePath());
+//            }
+//        } else {
+//            System.out.println("Đăng nhập thất bại: không tìm thấy tài khoản với thông tin đã cung cấp.");
+//        }
+
+    List<Account> list = dao.getAllCustomers();
+    
+    for(Account acc : list){
+        System.out.println(acc);
+    }
     }
 
 }
