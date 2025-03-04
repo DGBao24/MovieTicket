@@ -25,6 +25,7 @@
     <div id="wrapper">
         <!-- Include Sidebar -->
         <jsp:include page="includes/sidebar.jsp" />
+        <jsp:include page="sidebar.jsp" />
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -32,6 +33,7 @@
             <div id="content">
                 <!-- Include Topbar -->
                 <jsp:include page="includes/topbar.jsp" />
+                <jsp:include page="topbar.jsp" />
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
