@@ -54,6 +54,17 @@ public class Account {
         this.AvatarID = AvatarID;
     }
 
+    public Account(boolean Status) {
+        this.Status = Status;
+    }
+
+    public Account(int accountID, boolean Status) {
+        this.accountID = accountID;
+        this.Status = Status;
+    }
+    
+    
+
     public int getAvatarID() {
         return AvatarID;
     }

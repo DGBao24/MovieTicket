@@ -175,12 +175,58 @@ public class CustomerAccountController extends HttpServlet {
             }
 
             if (service.equals("ListAllCustomer")) {
-                List<Account> customers = dao.getAllCustomers(); 
-                request.setAttribute("customers", customers); 
+                String sql = "select * from Account";
+                List<Account> customers = dao.getAllCustomers(sql);
+                request.setAttribute("customers", customers);
+                request.getRequestDispatcher("/admin/account-management.jsp").forward(request, response);
+            }
+
+            if (service.equals("DisableAccount")) {
+                int cid = Integer.parseInt(request.getParameter("cid"));
+                String submit = request.getParameter("submit");
+
+                // Lấy thông tin tài khoản hiện tại
+                Account customer = dao.getAccountById(cid);
+
+                if (submit != null) { // Khi bấm vào nút kích hoạt / vô hiệu hóa
+                    if (customer == null) {
+                        request.setAttribute("errorMessage", "Không tìm thấy tài khoản!");
+                        response.sendRedirect("account?service=ListAllCustomer");
+                        return;
+                    }
+
+                    // Đảo trạng thái tài khoản
+                    boolean newStatus = !customer.isStatus();
+                    Account acc = new Account(cid, newStatus);
+                    int updated = dao.disableAccount(acc);
+
+                    // Kiểm tra cập nhật thành công hay không
+                    if (updated > 0) {
+                        request.getSession().setAttribute("successMessage", "Cập nhật trạng thái thành công!");
+                    } else {
+                        request.getSession().setAttribute("errorMessage", "Cập nhật thất bại, vui lòng thử lại!");
+                    }
+
+                    // Redirect để tránh lỗi khi F5
+                    response.sendRedirect("account?service=ListAllCustomer");
+                } else { // Trường hợp chỉ vào trang danh sách
+                    List<Account> accounts = dao.getAllCustomers("SELECT * FROM Account");
+                    request.setAttribute("customers", accounts);
+                    request.getRequestDispatcher("admin/account-management.jsp").forward(request, response);
+                }
+            }
+
+            if (service.equals("searchByName")) {
+                request.setCharacterEncoding("UTF-8");
+                String cname = request.getParameter("cname");
+                String sql = "SELECT * from Account Where Name like '%" + cname + "%'";
+                List<Account> accounts = dao.getAllCustomers(sql); // Viết phương thức này trong DAO
+                request.setAttribute("customers", accounts);
                 request.getRequestDispatcher("/admin/account-management.jsp").forward(request, response);
             }
 
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
