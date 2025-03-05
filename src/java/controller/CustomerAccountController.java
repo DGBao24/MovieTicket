@@ -70,7 +70,7 @@ public class CustomerAccountController extends HttpServlet {
 
                 if (submit == null) {
                     request.setAttribute("dataCustomer", customer);
-                    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/Profile.jsp");
                 } else {
 
                     request.setCharacterEncoding("UTF-8");
@@ -83,7 +83,7 @@ public class CustomerAccountController extends HttpServlet {
 
                     if (Name.isEmpty() || Address.isEmpty() || PhoneNum.isEmpty() || YearOfBirth.isEmpty() || Gender.isEmpty()) {
                         request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
-                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
+                        request.getRequestDispatcher(request.getContextPath() + "/Profile.jsp").forward(request, response);
                         return;
                     }
 
@@ -92,7 +92,7 @@ public class CustomerAccountController extends HttpServlet {
                         YearOfBirtH = Integer.parseInt(YearOfBirth);
                     } catch (NumberFormatException e) {
                         request.setAttribute("errorMessage", "Năm sinh không hợp lệ!");
-                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/Profile.jsp");
                         return;
                     }
 
@@ -106,10 +106,10 @@ public class CustomerAccountController extends HttpServlet {
                         session.setAttribute("account", updatedCustomer);
 
                         request.setAttribute("successMessage", "Cập nhật thông tin thành công!");
-                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/Profile.jsp");
                     } else {
                         request.setAttribute("errorMessage", "Cập nhật thất bại, vui lòng thử lại!");
-                        request.getRequestDispatcher("Profile.jsp").forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/Profile.jsp");
                     }
                 }
             }

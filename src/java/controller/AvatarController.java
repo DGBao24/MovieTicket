@@ -43,7 +43,7 @@ public class AvatarController extends HttpServlet {
                     String contentType = request.getContentType();
                     if (contentType == null || !contentType.toLowerCase().startsWith("multipart/")) {
                        
-                        request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                        response.sendRedirect("ChangeAvatar.jsp");
                         return;
                     }
                 if (cid == null) {
@@ -61,7 +61,7 @@ public class AvatarController extends HttpServlet {
                     Part filePart = request.getPart("avatar");
                     if (filePart == null || filePart.getSize() == 0) {
                         request.setAttribute("errorMessage", "Bạn chưa chọn ảnh!");
-                        request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                        response.sendRedirect("ChangeAvatar.jsp");
                         return;
                     }
 
@@ -69,7 +69,7 @@ public class AvatarController extends HttpServlet {
                     String fileType = filePart.getContentType();
                     if (!fileType.startsWith("image/")) {
                         request.setAttribute("errorMessage", "Chỉ được tải lên file ảnh!");
-                        request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                        response.sendRedirect("ChangeAvatar.jsp");
                         return;
                     }
 
@@ -101,7 +101,7 @@ public class AvatarController extends HttpServlet {
 
                     if (imageId == -1) {
                         request.setAttribute("errorMessage", "Lỗi khi lưu ảnh, vui lòng thử lại.");
-                        request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                       response.sendRedirect("ChangeAvatar.jsp");
                         return;
                     }
 
@@ -120,11 +120,11 @@ public class AvatarController extends HttpServlet {
                             response.sendRedirect("AvatarController?service=ChangeAvatar");
                         } else {
                             request.setAttribute("errorMessage", "Cập nhật avatar thất bại!");
-                            request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                            response.sendRedirect("ChangeAvatar.jsp");
                         }
                     } else {
                         request.setAttribute("errorMessage", "Lưu ảnh thất bại!");
-                        request.getRequestDispatcher("ChangeAvatar.jsp").forward(request, response);
+                        response.sendRedirect("ChangeAvatar.jsp");
                     }
                 }
             }

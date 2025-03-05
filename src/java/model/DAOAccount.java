@@ -411,7 +411,7 @@ public class DAOAccount extends DBConnection {
 //            System.out.println("Đăng nhập thất bại: không tìm thấy tài khoản với thông tin đã cung cấp.");
 //        }
 
-    List<Account> list = dao.getAllCustomers("Select*from Account where Name = 'John'");
+    List<Account> list = dao.getAllCustomers("Select*from Account where Name like '%John%'");
     
     for(Account acc : list){
         System.out.println(acc);

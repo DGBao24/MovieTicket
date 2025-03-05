@@ -57,7 +57,8 @@ CREATE TABLE Movie (
     Rate INT CHECK (Rate BETWEEN 0 AND 10),
     MoviePoster INT FOREIGN KEY REFERENCES Image(ImageID),
     TrailerURL NVARCHAR(MAX),
-    BasePrice FLOAT NOT NULL CHECK (BasePrice > 0) -- Base ticket price for the movie
+    BasePrice FLOAT NOT NULL CHECK (BasePrice > 0), -- Base ticket price for the movie
+	Status nvarchar(25) NOT NULL Check (Status in ('NowShowing','UpcomingMovie','ShownMovie'))
 );
 go
 -- Showtime Table
@@ -90,7 +91,11 @@ go
 CREATE TABLE Combo (
     ComboID INT PRIMARY KEY IDENTITY(1,1),
     ComboItem NVARCHAR(255) NOT NULL,
-    Price FLOAT NOT NULL CHECK (Price > 0)
+	Description Text,
+    Price FLOAT NOT NULL CHECK (Price > 0),
+	Quantity int Default 0,
+	Status bit default 1
+
 );
 go
 -- Promotion Table
@@ -230,9 +235,8 @@ INSERT INTO PricingFactor (Type, Category, Multiplier) VALUES
 ('Seat', 'VIP', 1.2);
 go
 -- Example Movie Base Prices
-INSERT INTO Movie (MovieName, Duration, Genre, Director, ReleaseDate, BasePrice)
-VALUES ('Example Movie', 120, 'Action', 'John Doe', '2025-01-01', 50000);
-go
+
+
 -- Insert data into Image
 INSERT INTO Image (ImagePath, ImageType) VALUES
 ('image1.jpg', N'Poster'),
@@ -267,17 +271,17 @@ INSERT INTO CinemaRoom (CinemaID, RoomName, RoomType, Status) VALUES
 (5, N'Luxury Suite', N'VIP', 1);
 go
 -- Insert data into Movie (có thêm BasePrice)
-INSERT INTO Movie (MovieName, Duration, Genre, Director, ReleaseDate, Description, Rate, MoviePoster, TrailerURL, BasePrice) VALUES
-(N'The Space Odyssey', 120, N'Sci-Fi', N'Jane Doe', '2024-01-15', N'A journey through the cosmos.', 8, 1, N'https://example.com/trailer1.mp4', 50000),
-(N'Love in the City', 90, N'Romance', N'John Smith', '2024-06-20', N'A romantic tale in urban life.', 7, 2, NULL, 45000),
-(N'Action Heroes', 150, N'Action', N'Mike Johnson', '2025-02-01', N'High-octane action thriller.', 9, 3, NULL, 60000),
-(N'Mystery Island', 130, N'Adventure', N'Emily Carter', '2025-03-10', N'An island full of secrets.', 8, 4, NULL, 55000),
-(N'Comedy Night', 110, N'Comedy', N'Tom Wright', '2025-04-01', N'Hilarious performances from top comedians.', 6, 5, NULL, 40000);
+INSERT INTO Movie (MovieName, Duration, Genre, Director, ReleaseDate, Description, Rate, MoviePoster, TrailerURL, BasePrice,Status) VALUES
+(N'The Space Odyssey', 120, N'Sci-Fi', N'Jane Doe', '2024-01-15', N'A journey through the cosmos.', 8, 1, N'https://example.com/trailer1.mp4', 50000,'NowShowing'),
+(N'Love in the City', 90, N'Romance', N'John Smith', '2024-06-20', N'A romantic tale in urban life.', 7, 2, NULL, 45000,'NowShowing'),
+(N'Action Heroes', 150, N'Action', N'Mike Johnson', '2025-02-01', N'High-octane action thriller.', 9, 3, NULL, 60000,'UpcomingMovie'),
+(N'Mystery Island', 130, N'Adventure', N'Emily Carter', '2025-03-10', N'An island full of secrets.', 8, 4, NULL, 55000,'ShownMovie'),
+(N'Comedy Night', 110, N'Comedy', N'Tom Wright', '2025-04-01', N'Hilarious performances from top comedians.', 6, 5, NULL, 40000,'UpcomingMovie');
 go
 
 -- Insert data into Showtime
 INSERT INTO Showtime (MovieID, StartTime, EndTime) VALUES
-(1, '2025-03-01 14:00:00', '2025-03-01 16:30:00'),
+(6, '2025-03-01 14:00:00', '2025-03-01 16:30:00'),
 (2, '2025-03-02 17:00:00', '2025-03-02 19:30:00'),
 (3, '2025-03-03 20:00:00', '2025-03-03 22:20:00'),
 (4, '2025-03-04 15:00:00', '2025-03-04 17:45:00'),
@@ -293,12 +297,12 @@ INSERT INTO Seat (SeatRow, SeatNumber, SeatType, RoomID, Status) VALUES
 
 go
 -- Insert data into Combo
-INSERT INTO Combo (ComboItem, Price) VALUES
-(N'Popcorn + Soda', 10.50),
-(N'Nachos + Drink', 12.00),
-(N'Large Combo', 15.75),
-(N'Candy + Water', 8.00),
-(N'Family Pack', 20.00);
+INSERT INTO Combo (ComboItem,Description, Price,Quantity,Status) VALUES
+(N'Popcorn + Soda','Inclued 1 Popcorn and Soda', 10.50,2,1),
+(N'Nachos + Drink','', 12.00,3,1),
+(N'Large Combo','', 15.75,123,1),
+(N'Candy + Water','', 8.00,421,1),
+(N'Family Pack','', 20.00,28,0);
 go
 -- Insert data into Promotion
 INSERT INTO Promotion (PromoCode, DiscountPercent, StartDate, EndTime, Status, Description, PointCost) VALUES
@@ -310,7 +314,7 @@ INSERT INTO Promotion (PromoCode, DiscountPercent, StartDate, EndTime, Status, D
 go
 -- Insert data into Ticket
 INSERT INTO Ticket (SeatID, ShowTimeID, Status, PurchaseDate, ComboID) VALUES
-(1, 1, N'Booked', '2025-02-20 12:00:00', 1),
+(1, 6, N'Booked', '2025-02-20 12:00:00', 1),
 (2, 2, N'Cancelled', '2025-02-21 14:30:00', NULL),
 (3, 3, N'Booked', '2025-02-22 16:00:00', 2),
 (4, 4, N'Booked', '2025-02-23 18:45:00', 3),
@@ -318,7 +322,7 @@ INSERT INTO Ticket (SeatID, ShowTimeID, Status, PurchaseDate, ComboID) VALUES
 go
 -- Insert data into Transaction
 INSERT INTO [Transaction] (Quantity, TicketID, AccountID, PromotionID) VALUES
-(1, 1, 1, NULL),
+(1, 6, 2, NULL),
 (2, 3, 2, 1),
 (1, 4, 3, 2),
 (1, 5, 4, NULL)

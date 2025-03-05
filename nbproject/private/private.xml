@@ -2,43 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/Filter/AuthFilte.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/ForgotPassword.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/nbproject/build-impl.xml</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/model/DBConnection.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/Profile.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/home.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/CustomerAccountController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/changePassword.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/css/changeProfile.css</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/signup.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/admin.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/entity/Account.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/LogoutController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/model/DAOAccount.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/LoginController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/SignUpController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/entity/Image.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/MovieController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/model/DAOImage.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/ChangeAvatar.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/CinemaRoomController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/detailmovie.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/entity/Movie.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/cinema.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/AvatarController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/HomeControll.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/CimemaController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/Menulist.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/OTPConfirm.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/ProfileController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/vendor/bootstrap/scss/_variables.scss</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/utils/Role.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/error.jsp</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/Filter/AuthFilter.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/AdminController.java</file>
-            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/vendor/datatables/dataTables.bootstrap4.min.css</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
