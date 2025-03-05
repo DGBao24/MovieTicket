@@ -22,6 +22,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/account-management.css" rel="stylesheet"
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -69,7 +70,7 @@
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
                             <i class="fas fa-plus"></i> Add New Account
                         </button>
-                    </div>
+                    </div>  
 
                     <!-- Account Table -->
                     <div class="card shadow mb-4">
