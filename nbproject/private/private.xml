@@ -33,6 +33,12 @@
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/Menulist.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/OTPConfirm.jsp</file>
             <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/ProfileController.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/vendor/bootstrap/scss/_variables.scss</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/utils/Role.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/error.jsp</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/Filter/AuthFilter.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/src/java/controller/AdminController.java</file>
+            <file>file:/D:/FPTU/Spring25/SWP/MovieTicket/web/vendor/datatables/dataTables.bootstrap4.min.css</file>
         </group>
     </open-files>
 </project-private>

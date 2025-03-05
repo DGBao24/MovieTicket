@@ -24,7 +24,23 @@ import java.util.List;
 public class DAOAccount extends DBConnection {
 
     DAOImage daoI = new DAOImage();
-
+    
+    public int disableAccount(Account acc){
+        int n = 0;
+        String sql = "Update Account set Status = ? Where AccountID = ?";
+        PreparedStatement ps;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,(acc.isStatus() == true ? 1 : 0));
+            ps.setInt(2, acc.getAccountID());   
+            n = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    
+    
     public Account getCustomerByEmailAndPassword(String email, String password) {
         Account customer = null;
         String sql = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
@@ -288,9 +304,9 @@ public class DAOAccount extends DBConnection {
         return n;
     }
     
-    public List<Account> getAllCustomers() {
+    public List<Account> getAllCustomers(String sql) {
     List<Account> customerList = new ArrayList<>();
-    String sql = "SELECT * FROM Account";
+    
     Statement state;
     ResultSet rs = null;
 
@@ -395,7 +411,7 @@ public class DAOAccount extends DBConnection {
 //            System.out.println("Đăng nhập thất bại: không tìm thấy tài khoản với thông tin đã cung cấp.");
 //        }
 
-    List<Account> list = dao.getAllCustomers();
+    List<Account> list = dao.getAllCustomers("Select*from Account where Name = 'John'");
     
     for(Account acc : list){
         System.out.println(acc);
