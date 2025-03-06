@@ -21,7 +21,7 @@ public class AdminController extends HttpServlet {
         // Check if user is logged in and has appropriate role
         if (account != null){
             if(account.getRole().equals("Admin") || account.getRole().equals("Manager")) {
-            request.getRequestDispatcher("admin.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/indexAdmin.jsp").forward(request, response);
             
             
         } 
