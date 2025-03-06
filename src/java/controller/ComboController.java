@@ -110,33 +110,34 @@ public class ComboController extends HttpServlet {
             if (service.equals("insertCombo")){
                 String submit = request.getParameter("submit");
                 if (submit == null) {
-                    request.getRequestDispatcher("/admin/insertCombo.jsp").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/admin/combo?service=listAll");
                 } else {
                     try {
                         String ComboItem = request.getParameter("ComboItem");
                         String Description = request.getParameter("Description");
                         float Price = Float.parseFloat(request.getParameter("Price"));
                         int Quantity = Integer.parseInt(request.getParameter("Quantity"));
-                        boolean Status = Boolean.parseBoolean(request.getParameter("Status"));
+                        boolean Status = request.getParameter("Status").equals("1");
                         
                         if (ComboItem == null || ComboItem.trim().isEmpty() ||
                             Description == null || Description.trim().isEmpty() ||
-                            Price <= 0 || Quantity <= 0) {
-                            request.setAttribute("error", "Invalid input data");
-                            request.getRequestDispatcher("/admin/insertCombo.jsp").forward(request, response);
+                            Price <= 0) {
+                            request.getSession().setAttribute("errorMessage", "Invalid input data");
+                            response.sendRedirect(request.getContextPath() + "/admin/combo?service=listAll");
                             return;
                         }
                         
                         int n = dao.insertCombo(new Combo(ComboItem, Description, Price, Quantity, Status));
                         if (n > 0) {
-                            response.sendRedirect(request.getContextPath() + "/admin/combo");
+                            request.getSession().setAttribute("successMessage", "Combo added successfully!");
+                            response.sendRedirect(request.getContextPath() + "/admin/combo?service=listAll");
                         } else {
-                            request.setAttribute("error", "Failed to insert combo");
-                            request.getRequestDispatcher("/admin/insertCombo.jsp").forward(request, response);
+                            request.getSession().setAttribute("errorMessage", "Failed to insert combo");
+                            response.sendRedirect(request.getContextPath() + "/admin/combo?service=listAll");
                         }
                     } catch (NumberFormatException e) {
-                        request.setAttribute("error", "Invalid number format");
-                        request.getRequestDispatcher("/admin/insertCombo.jsp").forward(request, response);
+                        request.getSession().setAttribute("errorMessage", "Invalid number format");
+                        response.sendRedirect(request.getContextPath() + "/admin/combo?service=listAll");
                     }
                 }
             }
