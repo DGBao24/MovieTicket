@@ -225,6 +225,75 @@ public class CustomerAccountController extends HttpServlet {
                 request.getRequestDispatcher("/admin/account-management.jsp").forward(request, response);
             }
 
+            if (service.equals("CreateManager")) {
+                String name = request.getParameter("name");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                String re_password = request.getParameter("confirm_password");
+                String phone = request.getParameter("phone");
+                String address = request.getParameter("address");
+                String yearOfBirth = request.getParameter("yearOfBirth");
+                String gender = request.getParameter("Gender");
+                try {
+                    int YOB = Integer.parseInt(yearOfBirth);
+
+                    // Check if passwords match
+                    if (!password.equals(re_password)) {
+                        request.setAttribute("mess", "Your password does not match.");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Check if email exists
+                    if (dao.isEmailExist(email)) {
+                        request.setAttribute("mess", "This email is already existed! Please try another email!");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (!Validation.checkPassWord(password)) {
+                        request.setAttribute("mess", "Password must have at least 6 characters, including uppercase letters, lowercase letters, and special characters");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (dao.isEmailExist(email)) {
+                        request.setAttribute("mess", "This email is already existed! Please try another email!");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+                    //Check if phone number exists
+                    if (dao.isPhoneExist(phone)) {
+                        request.setAttribute("mess", "This phone number is already existed!");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (!Validation.checkPhoneNum(phone)) {
+                        request.setAttribute("mess", "Invalid phone number. Please enter a valid Vietnamese phone number.");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                        return;
+                    }
+
+                    // Create new account
+                    int result = dao.createAccount(new Account(name, email, password, phone, address, YOB, true, "Manager", gender));
+
+                    if (result > 0) {
+                        // Success - redirect to home
+                        response.sendRedirect("account?service=ListAllCustomer");
+                    } else {
+                        // Failed to create account
+                        request.setAttribute("mess", "Failed to create account. Please try again.");
+                        request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                    }
+                } catch (NumberFormatException e) {
+                    request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                } catch (Exception e) {
+                    request.setAttribute("mess", "An error occurred: " + e.getMessage());
+                    request.getRequestDispatcher("/admin/createManager.jsp").forward(request, response);
+                }
+            }
+
         }
 
     }

@@ -19,10 +19,13 @@ public class AdminController extends HttpServlet {
         Account account = (Account) session.getAttribute("account");
         
         // Check if user is logged in and has appropriate role
-        if (account != null && (account.getRole().equals("Admin") || 
-                              account.getRole().equals("Manager"))) {
+        if (account != null){
+            if(account.getRole().equals("Admin") || account.getRole().equals("Manager")) {
             request.getRequestDispatcher("admin.jsp").forward(request, response);
-        } else {
+            
+            
+        } 
+        }else {
             response.sendRedirect(request.getContextPath() + "/Error.jsp");
         }
     }

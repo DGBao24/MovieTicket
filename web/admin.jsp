@@ -12,7 +12,7 @@
 
 <%
     Account user = (Account) session.getAttribute("account");
-    if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
+    if (user == null || !"Admin".equals(user.getRole()) && !"Manager".equals(user.getRole())) {
         response.sendRedirect("error.jsp");
         return;
     }

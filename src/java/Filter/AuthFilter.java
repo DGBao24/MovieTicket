@@ -29,15 +29,17 @@ public class AuthFilter implements Filter {
 
         // Get the requested URI
         String requestURI = req.getRequestURI();
-        
+
         // Get logged in account from session
         Account account = (Account) session.getAttribute("account");
 
         // Check if user is logged in and has appropriate role
-        if (account != null && (account.getRole().equals("Admin") || 
-                              account.getRole().equals("Manager"))) {
-            // User has permission, proceed with the request
-            chain.doFilter(request, response);
+        if (account != null) {
+            if (account.getRole().equals("Admin")
+                    || account.getRole().equals("Manager")) {
+                // User has permission, proceed with the request
+                chain.doFilter(request, response);
+            }
         } else {
             // User doesn't have permission, redirect to error page
             res.sendRedirect(req.getContextPath() + "/Error.jsp");

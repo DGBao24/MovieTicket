@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.jsp">
+        <a class="nav-link" href="admin.jsp">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -30,7 +30,7 @@
 
     <!-- Nav Item - Account Management -->
     <li class="nav-item active">
-        <a class="nav-link" href="account-management.jsp">
+        <a class="nav-link" href="account?service=ListAllCustomer">
             <i class="fas fa-fw fa-users"></i>
             <span>Account Management</span>
         </a>

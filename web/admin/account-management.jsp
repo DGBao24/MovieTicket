@@ -3,6 +3,13 @@
 <%@ page import="entity.Account,java.util.ArrayList,java.util.List" %>
 <%
     List<Account> accounts = (List)request.getAttribute("customers");
+    
+    Account user = (Account) session.getAttribute("account");
+    if (user == null || !"Admin".equals(user.getRole()) && !"Manager".equals(user.getRole())) {
+        response.sendRedirect("error.jsp");
+        return;
+    }
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,12 +71,10 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-2 text-gray-800">Account Management</h1>
                             <div>
-                                <button id="toggleLatestBtn" class="btn btn-info mr-2">
-                                    <i class="fas fa-sync"></i> Toggle Latest Account Status
-                                </button>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                                
+                                <a class="btn btn-primary" href="account?service=CreateManager">
                                     <i class="fas fa-plus"></i> Add New Account
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <!-- Account Table -->
@@ -174,32 +179,32 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="customer" method="POST">
-                        <input type="hidden" name="service" value="add">
+                    <form action="account" method="POST">
+                        <input type="hidden" name="service" value="CreateManager">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" name="username" required>
+                                <input type="text" class="form-control" name="Name" required>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <input type="password" class="form-control" name="Password" required>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" class="form-control" name="email" required>
+                                <input type="email" class="form-control" name="Email" required>
                             </div>
                             <div class="form-group">
                                 <label>Phone Number</label>
-                                <input type="tel" class="form-control" name="phoneNum" required>
+                                <input type="tel" class="form-control" name="PhoneNum" required>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input type="text" class="form-control" name="address">
+                                <input type="text" class="form-control" name="Address">
                             </div>
                             <div class="form-group">
                                 <label>Year of Birth</label>
-                                <input type="number" class="form-control" name="yearOfBirth" min="1900" max="2024">
+                                <input type="number" class="form-control" name="YearOfBirth" min="1900" max="2024">
                             </div>
                             <div class="form-group">
                                 <label>Gender</label>
@@ -209,14 +214,7 @@
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Role</label>
-                                <select class="form-control" name="role" required>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Manager">Manager</option>
-                                </select>
-                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <!--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

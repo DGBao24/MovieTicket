@@ -16,6 +16,7 @@
     }
     boolean isLoggedIn = (account != null);
     boolean isAdmin = isLoggedIn && "admin".equalsIgnoreCase(account.getRole());
+    boolean isManager = isLoggedIn && "Manager".equalsIgnoreCase(account.getRole());
     Integer customerID = (Integer) session.getAttribute("CustomerID");
     
     
@@ -212,7 +213,7 @@
                         <p style="color: black"><strong>Tên:</strong> <%= account.getName() %></p>
                         <p style="color: black"><strong>Mã khách hàng:</strong> <%= customerID %></p>
 
-                        <% if (isAdmin) { %>
+                        <% if (isAdmin || isManager) { %>
                         <p><a href="admin" class="btn btn-warning">Manager</a></p>
                         <% } %>
 
