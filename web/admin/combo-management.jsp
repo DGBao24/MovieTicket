@@ -73,6 +73,7 @@
                                                 Add New Combo</div>
                                             <form action="combo" method="POST" id="addComboForm">
                                                 <input type="hidden" name="service" value="insertCombo">
+                                                <input type="hidden" name="submit" value="true">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" name="ComboItem" id="ComboItem" 
                                                            placeholder="Combo Item" required>
@@ -156,6 +157,7 @@
                                                         <!-- Delete Button -->
                                                         <form action="combo?service=deleteCombo" method="POST" style="display: inline-block;">
                                                             <input type="hidden" name="cid" value="<%= combo.getComboID() %>">
+                                                            <input type="hidden" name="submit" value="true">
                                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this combo?');">
                                                                 <i class="fas fa-trash"></i> Delete
                                                             </button>
