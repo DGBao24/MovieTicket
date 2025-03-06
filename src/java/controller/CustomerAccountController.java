@@ -83,7 +83,7 @@ public class CustomerAccountController extends HttpServlet {
 
                     if (Name.isEmpty() || Address.isEmpty() || PhoneNum.isEmpty() || YearOfBirth.isEmpty() || Gender.isEmpty()) {
                         request.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin!");
-                        request.getRequestDispatcher(request.getContextPath() + "/Profile.jsp").forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/Profile.jsp");
                         return;
                     }
 

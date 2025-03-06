@@ -107,7 +107,7 @@ CREATE TABLE Promotion (
     EndTime DATE NOT NULL,
     Status BIT NOT NULL,
     Description TEXT,
-	PointCost INT NOT NULL DEFAULT 0
+	RemainRedemption INT NOT NULL DEFAULT 0
 );
 go
 -- Ticket Table (Calculating the ticket price based on multipliers)
@@ -192,39 +192,29 @@ END;
 
 
 go
-CREATE PROCEDURE BuyPromotionWithPoints
-    @AccountID INT,
-    @PromotionID INT
+CREATE TRIGGER trg_UpdatePromotionStatus
+ON Promotion
+AFTER UPDATE
 AS
 BEGIN
-    DECLARE @PointCost INT, @CurrentPoints INT;
+    -- Update Status to 0 (inactive) when RemainRedemption reaches 0
+    UPDATE Promotion
+    SET Status = 0
+    WHERE PromotionID IN (SELECT PromotionID FROM inserted WHERE RemainRedemption = 0);
+END;
+go
 
-    -- Lấy số điểm cần để mua Promotion
-    SELECT @PointCost = PointCost FROM Promotion WHERE PromotionID = @PromotionID;
-
-    -- Lấy LoyaltyPoint hiện tại của Account
-    SELECT @CurrentPoints = LoyaltyPoint FROM Account WHERE AccountID = @AccountID;
-
-    -- Kiểm tra nếu có đủ điểm để mua
-    IF @CurrentPoints >= @PointCost
-    BEGIN
-        -- Trừ điểm LoyaltyPoint
-        UPDATE Account
-        SET LoyaltyPoint = LoyaltyPoint - @PointCost
-        WHERE AccountID = @AccountID;
-
-        -- Thêm giao dịch vào bảng Transaction
-        INSERT INTO [Transaction] (AccountID, Quantity, TicketID, PromotionID, Amount)
-        VALUES (@AccountID, 1, NULL, @PromotionID, 0); -- Amount = 0 vì dùng điểm
-    END
-    ELSE
-    BEGIN
-        -- Báo lỗi nếu không đủ điểm
-        PRINT 'Không đủ điểm Loyalty để mua Promotion!';
-    END
+CREATE TRIGGER trg_UpdateComboStatus
+ON Combo
+AFTER UPDATE
+AS
+BEGIN
+    -- Update Status to 0 (inactive) when Quantity reaches 0
+    UPDATE Combo
+    SET Status = 0
+    WHERE ComboID IN (SELECT ComboID FROM inserted WHERE Quantity = 0);
 END;
 
---EXEC BuyPromotionWithPoints @AccountID = 1, @PromotionID = 2;
 go
 -- Insert Default Pricing Factors
 INSERT INTO PricingFactor (Type, Category, Multiplier) VALUES
@@ -281,7 +271,7 @@ go
 
 -- Insert data into Showtime
 INSERT INTO Showtime (MovieID, StartTime, EndTime) VALUES
-(6, '2025-03-01 14:00:00', '2025-03-01 16:30:00'),
+(1, '2025-03-01 14:00:00', '2025-03-01 16:30:00'),
 (2, '2025-03-02 17:00:00', '2025-03-02 19:30:00'),
 (3, '2025-03-03 20:00:00', '2025-03-03 22:20:00'),
 (4, '2025-03-04 15:00:00', '2025-03-04 17:45:00'),
@@ -305,16 +295,16 @@ INSERT INTO Combo (ComboItem,Description, Price,Quantity,Status) VALUES
 (N'Family Pack','', 20.00,28,0);
 go
 -- Insert data into Promotion
-INSERT INTO Promotion (PromoCode, DiscountPercent, StartDate, EndTime, Status, Description, PointCost) VALUES
-(N'WELCOME10', 10, '2025-01-01', '2025-12-31', 1, N'10% off for new customers.', 1),
-(N'SUMMER25', 25, '2025-06-01', '2025-08-31', 1, N'Summer sale discount.', 2),
-(N'VIP50', 50, '2025-02-01', '2025-03-31', 0, N'Exclusive VIP offer.', 5),
+INSERT INTO Promotion (PromoCode, DiscountPercent, StartDate, EndTime, Status, Description, RemainRedemption) VALUES
+(N'WELCOME10', 10, '2025-01-01', '2025-12-31', 1, N'10% off for new customers.', 100),
+(N'SUMMER25', 25, '2025-06-01', '2025-08-31', 1, N'Summer sale discount.', 200),
+(N'VIP50', 50, '2025-02-01', '2025-03-31', 0, N'Exclusive VIP offer.', 50),
 (N'NEWYEAR30', 30, '2025-01-01', '2025-02-15', 1, N'New Year special.', 4),
-(N'FAMILY15', 15, '2025-04-01', '2025-06-01', 1, N'Family special discount.', 5);
+(N'FAMILY15', 15, '2025-04-01', '2025-06-01', 1, N'Family special discount.', 500);
 go
 -- Insert data into Ticket
 INSERT INTO Ticket (SeatID, ShowTimeID, Status, PurchaseDate, ComboID) VALUES
-(1, 6, N'Booked', '2025-02-20 12:00:00', 1),
+(1, 1, N'Booked', '2025-02-20 12:00:00', 1),
 (2, 2, N'Cancelled', '2025-02-21 14:30:00', NULL),
 (3, 3, N'Booked', '2025-02-22 16:00:00', 2),
 (4, 4, N'Booked', '2025-02-23 18:45:00', 3),
@@ -322,7 +312,7 @@ INSERT INTO Ticket (SeatID, ShowTimeID, Status, PurchaseDate, ComboID) VALUES
 go
 -- Insert data into Transaction
 INSERT INTO [Transaction] (Quantity, TicketID, AccountID, PromotionID) VALUES
-(1, 6, 2, NULL),
+(1, 1, 2, NULL),
 (2, 3, 2, 1),
 (1, 4, 3, 2),
 (1, 5, 4, NULL)

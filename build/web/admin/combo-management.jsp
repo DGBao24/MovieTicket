@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="entity.Combo, java.util.List" %>
+
+<%
+    List<Combo> list = (List)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,14 +29,14 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Include Sidebar -->
-        <jsp:include page="sidebar.jsp" />
+        <jsp:include page="sidebar.jsp"></jsp:include>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Include Topbar -->
-                <jsp:include page="topbar.jsp" />
+                <jsp:include page="topbar.jsp"></jsp:include>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -66,21 +71,31 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Add New Combo</div>
-                                            <form action="ComboManagementServlet" method="POST" id="addComboForm">
-                                                <input type="hidden" name="action" value="add">
+                                            <form action="combo" method="POST" id="addComboForm">
+                                                <input type="hidden" name="service" value="insertCombo">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="comboName" id="comboName" 
-                                                           placeholder="Combo Name" required>
+                                                    <input type="text" class="form-control" name="ComboItem" id="ComboItem" 
+                                                           placeholder="Combo Item" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <textarea class="form-control" name="comboDescription" id="comboDescription" 
+                                                    <textarea class="form-control" name="Description" id="comboDescription" 
                                                               rows="3" placeholder="Description" required></textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control" name="comboPrice" id="comboPrice" 
-                                                           placeholder="Price" step="0.01" min="0" required>
+                                                    <input type="number" class="form-control" name="Price" id="comboPrice" 
+                                                           placeholder="Price" step="1000" min="0" required>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Add Combo</button>
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="Quantity" id="Quantity" 
+                                                           placeholder="Quantity" step="1" min="0" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="Status" id="Status" required>
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" value="insertCombo">Add Combo</button>
                                             </form>
                                         </div>
                                     </div>
@@ -100,38 +115,58 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Name</th>
+                                                    <th>Combo Item</th>
                                                     <th>Description</th>
                                                     <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach items="${combos}" var="combo">
+                                                <%
+                                                    for(Combo combo : list) {
+                                            %>
                                                     <tr>
-                                                        <td>${combo.id}</td>
-                                                        <td>${combo.name}</td>
-                                                        <td>${combo.description}</td>
-                                                        <td>$${combo.price}</td>
-                                                        <td>
-                                                            <button class="btn btn-info btn-sm edit-btn" 
-                                                                    data-id="${combo.id}"
-                                                                    data-name="${combo.name}"
-                                                                    data-description="${combo.description}"
-                                                                    data-price="${combo.price}">
-                                                                <i class="fas fa-edit"></i>
+                                                        <td><%= combo.getComboID() %></td>
+                                                        <td><%= combo.getComboItem() %></td>
+                                                        <td><%= combo.getDescription() %></td>
+                                                        <td><%= combo.getPrice() %></td>
+                                                        <td><%= combo.getQuantity() %></td>
+                                                        <td><span class="badge <%= combo.isStatus() ? "badge-success" : "badge-danger" %>">
+                                                        <%= combo.isStatus() ? "Active" : "Inactive" %>
+                                                         </span>
+                                                </td>
+
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <form action="combo?service=DisableStatus" method="POST" style="display:inline-block; margin-right: 5px;">
+                                                            <input type="hidden" name="cid" value="<%= combo.getComboID() %>">
+                                                            <input type="hidden" name="submit" value="true">
+                                                            <button type="submit" class="btn <%= combo.isStatus() ? "btn-warning" : "btn-success" %> btn-sm">
+                                                                <%= combo.isStatus() ? "Deactivate" : "Activate" %>
                                                             </button>
-                                                            <form action="ComboManagementServlet" method="POST" style="display: inline;">
-                                                                <input type="hidden" name="action" value="delete">
-                                                                <input type="hidden" name="comboId" value="${combo.id}">
-                                                                <button type="submit" class="btn btn-danger btn-sm delete-btn" 
-                                                                        onclick="return confirm('Are you sure you want to delete this combo?')">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        </td>
+                                                        </form>
+                                                        
+                                                        <!-- Update Button -->
+                                                        <a href="combo?service=updateCombo&cid=<%= combo.getComboID() %>" class="btn btn-primary btn-sm" style="margin-right: 5px;">
+                                                            <i class="fas fa-edit"></i> Update
+                                                        </a>
+                                                        
+                                                        <!-- Delete Button -->
+                                                        <form action="combo?service=deleteCombo" method="POST" style="display: inline-block;">
+                                                            <input type="hidden" name="cid" value="<%= combo.getComboID() %>">
+                                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this combo?');">
+                                                                <i class="fas fa-trash"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                                     </tr>
-                                                </c:forEach>
+                                                <%
+                                                    }
+                           
+                                            %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -140,48 +175,14 @@
                         </div>
                     </div>
 
-                    <!-- Edit Combo Modal -->
-                    <div class="modal fade" id="editComboModal" tabindex="-1" role="dialog" aria-labelledby="editComboModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editComboModalLabel">Edit Combo</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="ComboManagementServlet" method="POST">
-                                    <div class="modal-body">
-                                        <input type="hidden" name="action" value="edit">
-                                        <input type="hidden" name="comboId" id="editComboId">
-                                        <div class="form-group">
-                                            <label for="editComboName">Combo Name</label>
-                                            <input type="text" class="form-control" name="comboName" id="editComboName" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="editComboDescription">Description</label>
-                                            <textarea class="form-control" name="comboDescription" id="editComboDescription" rows="3" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="editComboPrice">Price</label>
-                                            <input type="number" class="form-control" name="comboPrice" id="editComboPrice" step="0.01" min="0" required>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                 
                 </div>
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
 
             <!-- Include Footer -->
-            <jsp:include page="includes/footer.jsp" />
+            <jsp:include page="includes/footer.jsp"></jsp:include>
         </div>
         <!-- End of Content Wrapper -->
     </div>
@@ -202,25 +203,7 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script>
-        $(document).ready(function() {
-            // Handle edit button click
-            $('.edit-btn').on('click', function() {
-                const id = $(this).data('id');
-                const name = $(this).data('name');
-                const description = $(this).data('description');
-                const price = $(this).data('price');
-
-                $('#editComboId').val(id);
-                $('#editComboName').val(name);
-                $('#editComboDescription').val(description);
-                $('#editComboPrice').val(price);
-
-                $('#editComboModal').modal('show');
-            });
-        });
-    </script>
+ 
 </body>
 
 </html>

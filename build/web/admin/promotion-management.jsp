@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.List, entity.Promotion" %>
+<%
+    List<Promotion> list = (List)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,21 +43,19 @@
                     <h1 class="h3 mb-4 text-gray-800">Promotion Management</h1>
 
                     <!-- Success/Error Messages -->
-                    <c:if test="${not empty successMessage}">
+                    <c:if test="${not empty sessionScope.successMessage}">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            ${successMessage}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            ${sessionScope.successMessage}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <% session.removeAttribute("successMessage"); %>
                     </c:if>
-                    <c:if test="${not empty errorMessage}">
+                    <c:if test="${not empty sessionScope.errorMessage}">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            ${errorMessage}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            ${sessionScope.errorMessage}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <% session.removeAttribute("errorMessage"); %>
                     </c:if>
 
                     <!-- Promotion Management Content -->
@@ -66,43 +68,71 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Add New Promotion</div>
-                                            <form action="PromotionManagementServlet" method="POST" id="addPromotionForm">
-                                                <input type="hidden" name="action" value="add">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="promoCode" id="promoCode" 
-                                                           placeholder="Promotion Code" required>
+                                            <form action="promo" method="POST" class="mb-4">
+                                                <input type="hidden" name="service" value="insertPromotion">
+                                                <input type="hidden" name="submit" value="true">
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Promo Code:</label>
+                                                            <input type="text" class="form-control" name="PromoCode" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" name="discountPercent" id="discountPercent" 
-                                                           placeholder="Discount Percent" min="0" max="100" required>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Discount (%):</label>
+                                                            <input type="number" class="form-control" name="DiscountPercent" min="1" max="100" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Redemption Count:</label>
+                                                            <input type="number" class="form-control" name="RemainRedemption" min="0" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="startDate">Start Date</label>
-                                                    <input type="date" class="form-control" name="startDate" id="startDate" required>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Start Date:</label>
+                                                            <input type="date" class="form-control" name="StartDate" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">End Date:</label>
+                                                            <input type="date" class="form-control" name="EndDate" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="endTime">End Date</label>
-                                                    <input type="date" class="form-control" name="endTime" id="endTime" required>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Description:</label>
+                                                            <input type="text" class="form-control" name="Description" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <select class="form-control" name="status" id="status" required>
-                                                        <option value="1">Active</option>
-                                                        <option value="0">Inactive</option>
-                                                    </select>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Status:</label>
+                                                            <select class="form-control" name="Status" required>
+                                                                <option value="true">Active</option>
+                                                                <option value="false">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 d-flex align-items-end">
+                                                        <div class="mb-3">
+                                                            <button type="submit" class="btn btn-primary">Create Promotion</button>
+                                                            <a href="promo?service=listAll" class="btn btn-secondary">Cancel</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <textarea class="form-control" name="description" id="description" 
-                                                              rows="3" placeholder="Description"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="form-control" name="customerId" id="customerId">
-                                                        <option value="">Select Customer (Optional)</option>
-                                                        <c:forEach items="${customers}" var="customer">
-                                                            <option value="${customer.accountId}">${customer.username}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Add Promotion</button>
                                             </form>
                                         </div>
                                     </div>
@@ -128,48 +158,52 @@
                                                     <th>End Date</th>
                                                     <th>Status</th>
                                                     <th>Description</th>
-                                                    <th>Customer</th>
+                                                    <th>Remain Redemption</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach items="${promotions}" var="promotion">
+                                                <%for (Promotion promotion : list) {%>
                                                     <tr>
-                                                        <td>${promotion.promotionId}</td>
-                                                        <td>${promotion.promoCode}</td>
-                                                        <td>${promotion.discountPercent}%</td>
-                                                        <td>${promotion.startDate}</td>
-                                                        <td>${promotion.endTime}</td>
+                                                        <td><%=promotion.getPromotionID()%></td>
+                                                        <td><%=promotion.getPromoCode()%></td>
+                                                        <td><%=promotion.getDiscountPercent()%>%</td>
+                                                        <td><%=promotion.getStartDate()%></td>
+                                                        <td><%=promotion.getEndDate()%></td>
                                                         <td>
-                                                            <span class="badge badge-${promotion.status ? 'success' : 'danger'}">
-                                                                ${promotion.status ? 'Active' : 'Inactive'}
-                                                            </span>
+                                                            <span class="badge <%= promotion.isStatus() ? "badge-success" : "badge-danger" %>">
+                                                        <%= promotion.isStatus() ? "Active" : "Inactive" %>
+                                                    </span>
                                                         </td>
-                                                        <td>${promotion.description}</td>
-                                                        <td>${promotion.customerUsername}</td>
+                                                        <td><%=promotion.getDescription()%></td>
+                                                        <td><%=promotion.getRemainRedemption()%></td>
                                                         <td>
-                                                            <button class="btn btn-info btn-sm edit-btn" 
-                                                                    data-id="${promotion.promotionId}"
-                                                                    data-code="${promotion.promoCode}"
-                                                                    data-discount="${promotion.discountPercent}"
-                                                                    data-start="${promotion.startDate}"
-                                                                    data-end="${promotion.endTime}"
-                                                                    data-status="${promotion.status}"
-                                                                    data-description="${promotion.description}"
-                                                                    data-customer="${promotion.customerId}">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button>
-                                                            <form action="PromotionManagementServlet" method="POST" style="display: inline;">
-                                                                <input type="hidden" name="action" value="delete">
-                                                                <input type="hidden" name="promotionId" value="${promotion.promotionId}">
-                                                                <button type="submit" class="btn btn-danger btn-sm delete-btn" 
-                                                                        onclick="return confirm('Are you sure you want to delete this promotion?')">
-                                                                    <i class="fas fa-trash"></i>
+                                                          <form action="promo?service=DisableStatus" method="POST" style="display: inline;">
+                                                                <input type="hidden" name="pid" value="<%= promotion.getPromotionID() %>">
+                                                                <input type="hidden" name="promotionId" value="<%= promotion.getPromotionID() %>">
+                                                               <button type="submit" name="submit" class="btn <%= promotion.isStatus() ? "btn-warning" : "btn-success" %> btn-sm">
+                                                            <%= promotion.isStatus() ? "Deactivate" : "Activate" %>
+                                                        </button>
+                                                            </form>
+                                                            
+                                                            <!-- Update Button -->
+                                                            <a href="promo?service=updatePromotion&pid=<%= promotion.getPromotionID() %>" class="btn btn-primary btn-sm">
+                                                                <i class="fas fa-edit"></i> Update
+                                                            </a>
+                                                            
+                                                            <!-- Delete Button -->
+                                                            <form action="promo?service=deletePromotion" method="POST" style="display: inline;" 
+                                                                  onsubmit="return confirm('Are you sure you want to delete this promotion?');">
+                                                                <input type="hidden" name="pid" value="<%= promotion.getPromotionID() %>">
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i> Delete
                                                                 </button>
                                                             </form>
                                                         </td>
                                                     </tr>
-                                                </c:forEach>
+                                                  <%
+                                                      }
+                                            %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -223,39 +257,6 @@
             document.getElementById('startDate').addEventListener('change', function() {
                 document.getElementById('endTime').min = this.value;
             });
-
-            // Edit button click handler
-            $('.edit-btn').click(function() {
-                const id = $(this).data('id');
-                const code = $(this).data('code');
-                const discount = $(this).data('discount');
-                const start = $(this).data('start');
-                const end = $(this).data('end');
-                const status = $(this).data('status');
-                const description = $(this).data('description');
-                const customer = $(this).data('customer');
-
-                // Populate form
-                $('#promoCode').val(code);
-                $('#discountPercent').val(discount);
-                $('#startDate').val(start);
-                $('#endTime').val(end);
-                $('#status').val(status ? '1' : '0');
-                $('#description').val(description);
-                $('#customerId').val(customer);
-
-                // Change form action
-                $('#addPromotionForm').attr('action', 'PromotionManagementServlet?action=update&promotionId=' + id);
-                
-                // Change button text
-                $('#addPromotionForm button[type="submit"]').text('Update Promotion');
-
-                // Scroll to form
-                $('html, body').animate({
-                    scrollTop: $("#addPromotionForm").offset().top
-                }, 500);
-            });
-        });
     </script>
 </body>
 </html>

@@ -59,6 +59,20 @@
             <span>Booking Management</span>
         </a>
     </li>
+    
+        <li class="nav-item">
+        <a class="nav-link" href="/bc6/admin/promo">
+            <i class="fas fa-fw fa-ticket-alt"></i>
+            <span>Promotion Management</span>
+        </a>
+    </li>
+    
+         <li class="nav-item">
+        <a class="nav-link" href="/bc6/admin/combo">
+            <i class="fas fa-fw fa-ticket-alt"></i>
+            <span>Combo Management</span>
+        </a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
