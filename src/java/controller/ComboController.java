@@ -52,7 +52,7 @@ public class ComboController extends HttpServlet {
                 if (submit == null){
                     int cid = Integer.parseInt(request.getParameter("cid"));
                     List<Combo> list = dao.getCombo("SELECT * FROM [swp391].[dbo].[Combo] where ComboID = " + cid);
-                    request.setAttribute("list", list);
+                    request.setAttribute("listCombo", list);
                     request.getRequestDispatcher("/admin/updateCombo.jsp").forward(request, response);
                 } else {
                     try {
@@ -145,7 +145,7 @@ public class ComboController extends HttpServlet {
             if (service.equals("listAll")){
                 String sql = "select* from Combo";
                 List<Combo> list = dao.getCombo(sql);
-                request.setAttribute("list", list);
+                request.setAttribute("listCombo", list);
                 request.getRequestDispatcher("/admin/combo-management.jsp").forward(request, response);
             }
             

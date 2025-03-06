@@ -2,6 +2,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List, entity.Combo" %>
 <%
+    Account user = (Account) session.getAttribute("account");
+    if (user == null || !"Admin".equals(user.getRole()) && !"Manager".equals(user.getRole())) {
+        response.sendRedirect("error.jsp");
+        return;
+    }
+%>
+<%
     List<Combo> list = (List)request.getAttribute("list");
     Combo combo = list.get(0);
 %>

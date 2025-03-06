@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="entity.Combo, java.util.List" %>
-
 <%
-    List<Combo> list = (List)request.getAttribute("list");
+    Account user = (Account) session.getAttribute("account");
+    if (user == null || !"Admin".equals(user.getRole()) && !"Manager".equals(user.getRole())) {
+        response.sendRedirect("error.jsp");
+        return;
+    }
+%>
+<%
+    List<Combo> list = (List)request.getAttribute("listCombo");
 %>
 <!DOCTYPE html>
 <html lang="en">
